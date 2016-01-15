@@ -8,11 +8,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
 import pqtwindows.GameCanvasSB;
-import pqtwindows.MyGraphics;
 
 import gameframework.base.ObservableValue;
 import gameframework.drawing.*;
@@ -31,11 +31,21 @@ public class Main {
 		aGameCanvas.setBounds(0, 0, 200, 200);
 		String windowsName = "SpaceBattle2016ExtendedUltimateVersionDeluxePremium2";
 		
-		GameStatusBar aStuBar = new GameStatusBar();
+		GameLevelDefaultImpl gl = new GameLevelDefaultImpl(aGameData) {
+			
+			@Override
+			protected void init() {
+				
+			}
+		};
+		
+		
+		/*GameStatusBar aStuBar = new GameStatusBar();
 		GameStatusBarElement<Integer> aBarElement = new GameStatusBarElement<Integer>("life", new ObservableValue<Integer>(3));
 		GameStatusBarElement<String> aBarElement2 = new GameStatusBarElement<String>("azerty", new ObservableValue<String>("azerty"));
 		
-		DrawableImage bg = new BackgroundImage("/resources/spaceBG.jpg", aGameCanvas);
+		DrawableImage bg = new BackgroundImage("/resources/spaceBG.jpg", aGameCanvas);	
+		
 				
 		//Graphics tmp = aGameCanvas.getCanevasGraphic();
 		
@@ -48,21 +58,21 @@ public class Main {
 				return true;
 			}
 
-		});*/
+		});
 		//aGameWindow.
 		
 		
-		MyGraphics graphic = new MyGraphics();
+		/*MyGraphics graphic = new MyGraphics();
 		graphic.create(0, 0, 200, 200);
 		aGameCanvas.getCanvas().paint(graphic);
 		
 		//Change the value of the 2nd element
-		aBarElement2.getElement().setValue("test");
+		aBarElement2.getElement().setValue("test");*/
 
 
 		//Creation of the game window.
-		GameWindow aGameWindow = new GameWindow(windowsName, aGameCanvas, aGameConfiguration,aBarElement,aBarElement2);
-		aGameCanvas.drawFullSizeImage(bg.getImage());
+		GameWindow aGameWindow = new GameWindow(windowsName, aGameCanvas, aGameConfiguration/*,aBarElement,aBarElement2*/);
+		
 		//display the windows
 		aGameWindow.createGUI();
 	}
