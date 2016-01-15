@@ -9,15 +9,19 @@ import java.awt.event.KeyListener;
 
 import gameframework.drawing.GameCanvas;
 
-public class GameCanvasSB implements GameCanvas{
+public class GameCanvasSB implements GameCanvas {
 
 	protected final Canvas canvas;
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
 
 	public GameCanvasSB() {
 		canvas = new Canvas();
 	}
 	
-	public Graphics getCanevasGraphic(){
+	public Graphics getCanvasGraphic(){
 		return canvas.getGraphics();
 	}
 
@@ -42,7 +46,8 @@ public class GameCanvasSB implements GameCanvas{
 	}
 
 	public void drawFullSizeImage(Image image) {
-		canvas.getGraphics().drawImage(image, 0, 0, canvas.getWidth(),
+		Graphics tmp = canvas.getGraphics();
+		tmp.drawImage(image, 0, 0, canvas.getWidth(),
 				canvas.getHeight(), canvas);
 	}
 
