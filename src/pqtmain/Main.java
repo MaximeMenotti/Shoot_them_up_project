@@ -1,21 +1,7 @@
 package pqtmain;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
-
 import pqtwindows.GameCanvasSB;
-
-import gameframework.base.ObservableValue;
-import gameframework.drawing.*;
+import game.GameLevelSB;
 import gameframework.game.*;
 import gameframework.gui.*;
 
@@ -25,19 +11,14 @@ public class Main {
 	
 	public static void main(String[] args) {
 		//Settings.
-		GameConfiguration aGameConfiguration = new GameConfiguration(30,30,10,3);
-		GameData aGameData = new GameData(aGameConfiguration);
-		GameCanvasSB aGameCanvas = new GameCanvasSB();
-		aGameCanvas.setBounds(0, 0, 200, 200);
-		String windowsName = "SpaceBattle2016ExtendedUltimateVersionDeluxePremium2";
+		GameConfiguration configuration = new GameConfiguration(30,30,10,3);
+		GameData data = new GameData(configuration);
+		GameCanvasSB canvas = new GameCanvasSB();
+		canvas.setBounds(0, 0, 500, 500);
+		String windowsName = "SpaceBattle";
+		GameLevelSB level = new GameLevelSB(data);
+		data.addLevel(level);
 		
-		GameLevelDefaultImpl gl = new GameLevelDefaultImpl(aGameData) {
-			
-			@Override
-			protected void init() {
-				
-			}
-		};
 		
 		
 		/*GameStatusBar aStuBar = new GameStatusBar();
@@ -71,10 +52,12 @@ public class Main {
 
 
 		//Creation of the game window.
-		GameWindow aGameWindow = new GameWindow(windowsName, aGameCanvas, aGameConfiguration/*,aBarElement,aBarElement2*/);
+		GameWindow gameWindow = new GameWindow(windowsName, canvas, configuration/*,aBarElement,aBarElement2*/);
 		
 		//display the windows
-		aGameWindow.createGUI();
+		gameWindow.createGUI();
+		
+		level.start();
 	}
 
 }
