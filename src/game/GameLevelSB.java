@@ -15,6 +15,7 @@ public class GameLevelSB extends GameLevelDefaultImpl{
 		this.universe = new GameUniverseDefaultImpl();
 		this.universe.setGameData(this.data);
 		this.gameBoard = new GameUniverseViewPortSB(this.data);		
+		this.data.getCanvas().setSize(640, 480);
 	}
 		
 }
