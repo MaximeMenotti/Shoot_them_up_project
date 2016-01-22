@@ -13,12 +13,10 @@ public class GameLevelSB extends GameLevelDefaultImpl{
 
 	@Override
 	protected void init() {
-		this.universe = new GameUniverseDefaultImpl();
-		this.universe.setGameData(this.data);
 		this.gameBoard = new GameUniverseViewPortSB(this.data);		
 		this.data.getCanvas().setSize(1366, 768);
-		Player p = new Player();
-		this.universe.addGameEntity(p);
+		Player p = new Player(data.getCanvas());
+		data.getUniverse().addGameEntity(p);
 	}
 		
 }
