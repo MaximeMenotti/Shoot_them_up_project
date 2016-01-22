@@ -13,7 +13,7 @@ public class Player implements GameEntity {
 	protected SpriteManagerDefaultImpl sprite;
 	
 	public Player(GameCanvas canvas) {
-		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/player.png", canvas), 50, 1);
+		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), 50, 3);
 	}
 	
 	public void draw(Graphics g) {

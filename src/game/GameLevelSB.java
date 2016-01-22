@@ -3,7 +3,6 @@ package game;
 import entities.Player;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
-import gameframework.game.GameUniverseDefaultImpl;
 
 public class GameLevelSB extends GameLevelDefaultImpl{
 
