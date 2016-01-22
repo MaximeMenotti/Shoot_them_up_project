@@ -1,6 +1,5 @@
 package pqtmain;
 
-import pqtwindows.GameCanvasSB;
 import game.GameLevelSB;
 import gameframework.game.*;
 import gameframework.gui.*;
@@ -11,7 +10,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		//Settings.
-		GameConfiguration configuration = new GameConfiguration(50,50,10,3);
+		GameConfiguration configuration = new GameConfiguration(70,100,10,3);
 		GameData data = new GameData(configuration);
 		String windowsName = "SpaceBattle";
 		GameLevelSB level = new GameLevelSB(data);

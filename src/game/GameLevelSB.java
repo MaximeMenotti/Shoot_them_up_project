@@ -1,5 +1,6 @@
 package game;
 
+import entities.Player;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
@@ -15,7 +16,9 @@ public class GameLevelSB extends GameLevelDefaultImpl{
 		this.universe = new GameUniverseDefaultImpl();
 		this.universe.setGameData(this.data);
 		this.gameBoard = new GameUniverseViewPortSB(this.data);		
-		this.data.getCanvas().setSize(640, 480);
+		this.data.getCanvas().setSize(1366, 768);
+		Player p = new Player();
+		this.universe.addGameEntity(p);
 	}
 		
 }
