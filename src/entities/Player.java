@@ -13,6 +13,7 @@ import gameframework.motion.GameMovable;
 import gameframework.motion.GameMovableDriverDefaultImpl;
 import gameframework.motion.MoveStrategyKeyboard;
 import gameframework.motion.MoveStrategyKeyboard8Dir;
+import gameframework.motion.MoveStrategyStraightLine;
 import gameframework.motion.overlapping.Overlappable;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -45,26 +46,27 @@ public class Player extends GameMovable implements Observer,
 
         //for playing with keyboard
         MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard8Dir();
-        GameMovableDriverDefaultImpl moveDriver = new GameMovableDriverDefaultImpl();
-
-        moveDriver.setStrategy(keyboard);
-        moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
+        
+        this.moveDriver = new GameMovableDriverDefaultImpl();
+        this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
+        
+        
+        /*moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
 
         gameData.getCanvas().addKeyListener(keyboard);
         setDriver(moveDriver);
 
         gameData.getCanvas().addKeyListener(this);
 
-        gameData.getLife().addObserver(this);
-
+        gameData.getLife().addObserver(this);*/
     }
 
     public void draw(Graphics g) {
-        this.sprite.draw(g, new Point(500, 500));
+        this.sprite.draw(g, this.position);
     }
 
     public boolean isMovable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -77,7 +79,32 @@ public class Player extends GameMovable implements Observer,
         }
     }
 
-    @Override
+	public Rectangle getBoundingBox() {
+		Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
+        return rectangle;
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+    /*@Override
     public Rectangle getBoundingBox() {
         Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
         return rectangle;
@@ -102,6 +129,6 @@ public class Player extends GameMovable implements Observer,
     public void keyReleased(KeyEvent e) {
         //remettre le vaisseau a plat
         this.sprite.setType(spriteType[1]);
-    }
+    }*/
 
 }
