@@ -14,7 +14,7 @@ public class GameLevelSB extends GameLevelDefaultImpl{
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);		
 		this.data.getCanvas().setSize(1366, 768);
-		Player p = new Player(data.getCanvas());
+		Player p = new Player(data.getCanvas(),data);
 		data.getUniverse().addGameEntity(p);
 	}
 		
