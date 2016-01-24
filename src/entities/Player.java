@@ -14,6 +14,7 @@ import gameframework.motion.GameMovableDriverDefaultImpl;
 import gameframework.motion.MoveStrategyKeyboard;
 import gameframework.motion.MoveStrategyKeyboard8Dir;
 import gameframework.motion.MoveStrategyStraightLine;
+import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -22,7 +23,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Player extends GameMovable implements Observer,
-        Overlappable, GameEntity, Drawable, KeyListener {
+        Overlappable, GameEntity, Drawable {
 
     protected SpriteManagerDefaultImpl sprite;
     protected GameCanvas canvas;
@@ -45,17 +46,18 @@ public class Player extends GameMovable implements Observer,
         this.sprite.reset();
 
         //for playing with keyboard
-        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard8Dir();
+        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard(true, new SpeedVector(new Point(0,0)), true);
         
         this.moveDriver = new GameMovableDriverDefaultImpl();
-        this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
+        //this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
         
+        this.canvas.addKeyListener(keyboard);
+        this.moveDriver.setStrategy(keyboard);
+        this.moveDriver.getSpeedVector(this).setDirection(new Point(1,1));
         
         /*moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
-
-        gameData.getCanvas().addKeyListener(keyboard);
+       
         setDriver(moveDriver);
-
         gameData.getCanvas().addKeyListener(this);
 
         gameData.getLife().addObserver(this);*/
@@ -73,30 +75,19 @@ public class Player extends GameMovable implements Observer,
     public void oneStepMoveAddedBehavior() {
         Point directionActual = this.moveDriver.getSpeedVector(this).getDirection();
         if (directionActual.equals(new Point(1, 0))) {
-            this.sprite.setType(spriteType[2]);
+            this.sprite.setType(spriteType[0]);
         } else if (directionActual.equals(new Point(-1, 0))) {
             this.sprite.setType(spriteType[0]);
+        } else if (directionActual.equals(new Point(0, 1))){
+        	this.sprite.setType(spriteType[0]);
+        } else if (directionActual.equals(new Point(0, -1))){
+        	this.sprite.setType(spriteType[0]);
         }
     }
-
+    
 	public Rectangle getBoundingBox() {
 		Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
         return rectangle;
-	}
-
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void update(Observable arg0, Object arg1) {
