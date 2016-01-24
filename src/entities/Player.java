@@ -22,38 +22,27 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Player extends GameMovable implements Observer,
-        Overlappable, GameEntity, Drawable {
+public class Player extends GameMovable implements Overlappable, GameEntity, Drawable {
 
     protected SpriteManagerDefaultImpl sprite;
-    protected GameCanvas canvas;
-    protected GameData gameData;
-    protected int initialX;
-    protected int initialY;
+    
     protected int spriteManagerSize = 50;
-    protected String[] spriteType = {"left","middle","right"};
 
     public Player(GameCanvas canvas, GameData prmData) {
-        //initialisation of the position at the game beginning    
-        initialX = 50;
-        initialY = 60;
-        this.canvas = canvas;
-        this.gameData = prmData;
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), spriteManagerSize, 3);
 
+        this.position = new Point(canvas.getHeight()/2, canvas.getHeight()/2);
         //initialise sprite manager
-        this.sprite.setTypes(spriteType[0], spriteType[1],spriteType[2]);
         this.sprite.reset();
 
         //for playing with keyboard
-        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard(true, new SpeedVector(new Point(0,0)), true);
+        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard(false, new SpeedVector(new Point(0,0), 20), true);
         
         this.moveDriver = new GameMovableDriverDefaultImpl();
         //this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
         
-        this.canvas.addKeyListener(keyboard);
+        canvas.addKeyListener(keyboard);
         this.moveDriver.setStrategy(keyboard);
-        this.moveDriver.getSpeedVector(this).setDirection(new Point(1,1));
         
         /*moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
        
@@ -74,14 +63,12 @@ public class Player extends GameMovable implements Observer,
     @Override
     public void oneStepMoveAddedBehavior() {
         Point directionActual = this.moveDriver.getSpeedVector(this).getDirection();
-        if (directionActual.equals(new Point(1, 0))) {
-            this.sprite.setType(spriteType[0]);
-        } else if (directionActual.equals(new Point(-1, 0))) {
-            this.sprite.setType(spriteType[0]);
-        } else if (directionActual.equals(new Point(0, 1))){
-        	this.sprite.setType(spriteType[0]);
-        } else if (directionActual.equals(new Point(0, -1))){
-        	this.sprite.setType(spriteType[0]);
+        if (directionActual.equals(new Point(1, 0))){
+            this.sprite.setIncrement(2);
+        } else if (directionActual.equals(new Point(-1, 0))){
+            this.sprite.setIncrement(0);
+        } else {
+        	this.sprite.setIncrement(1);
         }
     }
     
@@ -89,37 +76,4 @@ public class Player extends GameMovable implements Observer,
 		Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
         return rectangle;
 	}
-
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-    /*@Override
-    public Rectangle getBoundingBox() {
-        Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
-        return rectangle;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        //remettre le vaisseau a plat
-        this.sprite.setType(spriteType[1]);
-    }*/
-
 }

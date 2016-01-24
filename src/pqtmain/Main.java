@@ -10,7 +10,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		//Settings.
-		GameConfiguration configuration = new GameConfiguration(70,100,10,3);
+		GameConfiguration configuration = new GameConfiguration(70,120,10,3);
 		GameData data = new GameData(configuration);
 		String windowsName = "SpaceBattle";
 		GameLevelSB level = new GameLevelSB(data);
@@ -18,7 +18,6 @@ public class Main {
 
 		//Creation of the game window.
 		GameWindow gameWindow = new GameWindow(windowsName, data.getCanvas(), configuration);
-		
 		//display the windows
 		gameWindow.createGUI();
 		
