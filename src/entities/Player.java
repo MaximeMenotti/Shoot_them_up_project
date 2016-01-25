@@ -32,11 +32,12 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), spriteManagerSize, 3);
 
         this.position = new Point(canvas.getHeight()/2, canvas.getHeight()/2);
+        
         //initialise sprite manager
         this.sprite.reset();
 
         //for playing with keyboard
-        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard(false, new SpeedVector(new Point(0,0), 20), true);
+        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
         this.moveDriver = new GameMovableDriverDefaultImpl();
         //this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
