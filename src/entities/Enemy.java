@@ -23,11 +23,13 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
 	protected SpriteManagerDefaultImpl sprite;
 	final static int SHIP_SIZE = 50;
 	protected Task task;
+	protected int score;
 	
 	public Enemy(GameCanvas canvas, GameData prmData) {
 		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/enemy.png", canvas), SHIP_SIZE, 1);
 		this.position = new Point(this.random(canvas.getWidth(), 0), (this.random(canvas.getHeight()*2, 15))*-1);
 		this.sprite.reset();
+		this.score = 100;
 		MoveStrategyStraightLine ms = new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight()));
 		ms.setSpeed(7);
 		this.moveDriver.setStrategy(ms);
@@ -83,5 +85,9 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
     	task.cancel();
     	timer.cancel();
     	timer.purge();
+    }
+    
+    public int getScore() {
+    	return this.score;
     }
 }

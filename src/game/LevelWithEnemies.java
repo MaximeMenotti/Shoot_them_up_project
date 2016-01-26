@@ -2,6 +2,7 @@ package game;
 
 import entities.Enemy;
 import entities.Player;
+import entities.Wall;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 
@@ -22,6 +23,7 @@ public class LevelWithEnemies extends GameLevelDefaultImpl{
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
 		Player aPlayer = new Player(data.getCanvas(),data);
+		Wall w = new Wall(data.getCanvas());
 		for(int i = 0 ; i < nbEnemies; i ++){
 			data.getUniverse().addGameEntity(new Enemy(data.getCanvas(), data));
 		}

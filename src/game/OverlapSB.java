@@ -27,6 +27,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 			e1.stopTask();
 			data.getUniverse().removeGameEntity(e1);
 			data.getUniverse().removeGameEntity(e2);
+			data.getScore().setValue(data.getScore().getValue() + e1.getScore());
 		}
 	}
 	
@@ -34,6 +35,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 		if(e2.isFriendly()){
 			data.getUniverse().removeGameEntity(e1);
 			data.getUniverse().removeGameEntity(e2);
+			data.getScore().setValue(data.getScore().getValue() + e1.getScore());
 		}
 	}
 	
