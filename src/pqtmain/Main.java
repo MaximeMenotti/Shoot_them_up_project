@@ -41,7 +41,7 @@ public class Main {
 	}
 	
 	public static void level2(GameData data){
-		LevelWithEnemies level2 = new LevelWithEnemies(data,10);
+		LevelWithEnemies level2 = new LevelWithEnemies(data,15);
 		data.addLevel(level2);
 		level2.start();
 	}

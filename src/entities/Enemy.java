@@ -22,6 +22,7 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
 	
 	protected SpriteManagerDefaultImpl sprite;
 	final static int SHIP_SIZE = 50;
+	protected Task task;
 	
 	public Enemy(GameCanvas canvas, GameData prmData) {
 		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/enemy.png", canvas), SHIP_SIZE, 1);
@@ -30,7 +31,9 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
 		MoveStrategyStraightLine ms = new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight()));
 		ms.setSpeed(7);
 		this.moveDriver.setStrategy(ms);
-		new Task(prmData).run();
+		task = new Task(prmData);
+		task.run();
+		prmData.getOverlapProcessor().addOverlappable(this);
 	}
 	
 	public boolean isMovable() {
@@ -74,5 +77,11 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
             //System.out.println(new Date());
         }
 
+    }
+    
+    public void stopTask(){
+    	task.cancel();
+    	timer.cancel();
+    	timer.purge();
     }
 }

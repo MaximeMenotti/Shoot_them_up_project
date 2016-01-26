@@ -22,11 +22,8 @@ public class LevelWithEnemies extends GameLevelDefaultImpl{
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
 		Player aPlayer = new Player(data.getCanvas(),data);
-		data.getOverlapProcessor().addOverlappable(aPlayer);
 		for(int i = 0 ; i < nbEnemies; i ++){
-			Enemy entity = new Enemy(data.getCanvas(), data);
-			data.getUniverse().addGameEntity(entity);
-			data.getOverlapProcessor().addOverlappable(entity);
+			data.getUniverse().addGameEntity(new Enemy(data.getCanvas(), data));
 		}
 		data.getUniverse().addGameEntity(aPlayer);
 		

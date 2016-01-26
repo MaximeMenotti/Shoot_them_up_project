@@ -24,11 +24,8 @@ public class LevelWithRocks extends GameLevelDefaultImpl{
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
 		Player aPlayer = new Player(data.getCanvas(),data);
-		data.getOverlapProcessor().addOverlappable(aPlayer);
 		for(int i = 0 ; i < nbRocks; i ++){
-			Rock entity = new Rock(data.getCanvas(), data, ROCK_SPEED);
-			data.getUniverse().addGameEntity(entity);
-			data.getOverlapProcessor().addOverlappable(entity);
+			data.getUniverse().addGameEntity(new Rock(data.getCanvas(), data, ROCK_SPEED));
 		}
 		data.getUniverse().addGameEntity(aPlayer);
 		
