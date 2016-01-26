@@ -13,6 +13,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 	public void overlapRule(Rock e1, Player e2){
 		data.getUniverse().removeGameEntity(e1);
 		decreaseLife();
+		removePlayer(e2);
 	}
 	
 	public void overlapRule(Enemy e1, Player e2){
@@ -20,6 +21,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 		e1.stopTask();
 		data.getUniverse().removeGameEntity(e1);
 		decreaseLife();
+		removePlayer(e2);
 	}
 	
 	public void overlapRule(Enemy e1, Fireball e2){
@@ -44,13 +46,16 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 			System.out.println("outch");
 			data.getUniverse().removeGameEntity(e2);
 			decreaseLife();
-			if (this.data.getLife().getValue() == 0 ){
-				data.getUniverse().removeGameEntity(e1);
-
-			}
+			removePlayer(e1);
 		}
 	}
 
+	public void removePlayer(Player e1){
+		if (this.data.getLife().getValue() == 0 ){
+			data.getUniverse().removeGameEntity(e1);
+
+		}
+	}
 	public void setGameData(GameData data) {
 		this.data = data;		
 	}
