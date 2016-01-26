@@ -44,6 +44,10 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 			System.out.println("outch");
 			data.getUniverse().removeGameEntity(e2);
 			decreaseLife();
+			if (this.data.getLife().getValue() == 0 ){
+				data.getUniverse().removeGameEntity(e1);
+
+			}
 		}
 	}
 
