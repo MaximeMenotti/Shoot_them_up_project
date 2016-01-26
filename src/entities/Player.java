@@ -13,37 +13,38 @@ import gameframework.motion.GameMovable;
 import gameframework.motion.GameMovableDriverDefaultImpl;
 import gameframework.motion.MoveStrategyKeyboard;
 import gameframework.motion.MoveStrategyKeyboard8Dir;
-import gameframework.motion.MoveStrategyStraightLine;
 import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Observable;
-import java.util.Observer;
+
+
+import game.Shoot;
 
 public class Player extends GameMovable implements Overlappable, GameEntity, Drawable {
 
     protected SpriteManagerDefaultImpl sprite;
     
-    protected int spriteManagerSize = 50;
+    final protected int SHIP_SIZE = 50;
 
     public Player(GameCanvas canvas, GameData prmData) {
-        this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), spriteManagerSize, 3);
+        this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), SHIP_SIZE, 3);
 
-        this.position = new Point(canvas.getHeight()/2, canvas.getHeight()/2);
+        this.position = new Point(canvas.getWidth()/2, canvas.getHeight()/2);
         
-        //initialise sprite manager
+        //initialize sprite manager
         this.sprite.reset();
 
         //for playing with keyboard
-        MoveStrategyKeyboard keyboard = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
+        MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
+        
+        Shoot guns = new Shoot(prmData, this);
         
         this.moveDriver = new GameMovableDriverDefaultImpl();
         //this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
         
-        canvas.addKeyListener(keyboard);
-        this.moveDriver.setStrategy(keyboard);
+        canvas.addKeyListener(direction);
+        canvas.addKeyListener(guns);
+        this.moveDriver.setStrategy(direction);
         
         /*moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
        
@@ -74,7 +75,12 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     }
     
 	public Rectangle getBoundingBox() {
-		Rectangle rectangle = new Rectangle(this.spriteManagerSize, this.spriteManagerSize);
+		Rectangle rectangle = new Rectangle(this.SHIP_SIZE, this.SHIP_SIZE);
         return rectangle;
 	}
+	
+	public Point getPosition(){
+		return this.position;
+	}
+		
 }

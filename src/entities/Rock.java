@@ -15,15 +15,26 @@ import gameframework.motion.MoveStrategyStraightLine;
 import gameframework.motion.overlapping.Overlappable;
 
 public class Rock extends GameMovable implements Overlappable, GameEntity, Drawable{
+	
+	final static int SIZE_MIN = 30;
+	final static int SIZE_MAX = 60;
+	
 	protected SpriteManagerDefaultImpl sprite;
-	protected int spriteManagerSize = 30;
+	protected int spriteManagerSize;
 	
 	public Rock(GameCanvas canvas, GameData prmData) {
-		this.spriteManagerSize = this.random(60, 30);
+		this.spriteManagerSize = this.random(SIZE_MAX, SIZE_MIN);
 		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/rock.png", canvas), this.spriteManagerSize, 1);
 		this.sprite.reset();
-		this.position = new Point(this.random(canvas.getWidth(), 0), 0);
+		this.position = new Point(this.random(canvas.getWidth(), 0), (this.random(canvas.getHeight()*2, 15))*-1);
 		this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight())));
+	}
+	
+	public Rock(GameCanvas canvas, GameData prmData, int speed){
+		this(canvas,prmData);
+		MoveStrategyStraightLine ms = new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight()));
+		ms.setSpeed(speed);
+		this.moveDriver.setStrategy(ms);
 	}
 	
 	public int random(int higher, int lower){
@@ -45,7 +56,10 @@ public class Rock extends GameMovable implements Overlappable, GameEntity, Drawa
 	}
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		// TODO Auto-generated method stub
 		
-	}	
+	}
+	
+	public void overlapRule(Overlappable e1, Overlappable e2){
+		System.out.println("outch");
+	}
 }
