@@ -16,7 +16,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 		removePlayer(e2);
 	}
 	
-	public void overlapRule(Enemy e1, Player e2){
+	public void overlapRule(EnemyShip e1, Player e2){
 		System.out.println("outch");
 		e1.stopTask();
 		data.getUniverse().removeGameEntity(e1);
@@ -24,7 +24,7 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 		removePlayer(e2);
 	}
 	
-	public void overlapRule(Enemy e1, Fireball e2){
+	public void overlapRule(EnemyShip e1, Fireball e2){
 		if(e2.isFriendly()){
 			e1.stopTask();
 			data.getUniverse().removeGameEntity(e1);

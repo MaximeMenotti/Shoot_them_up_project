@@ -28,7 +28,7 @@ public class Rock extends GameMovable implements Overlappable, GameEntity, Drawa
 		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/rock.png", canvas), this.spriteManagerSize, 1);
 		this.sprite.reset();
 		this.score = 50;
-		this.position = new Point(this.random(canvas.getWidth(), 0), (this.random(canvas.getHeight()*2, 15))*-1);
+		this.position = new Point(this.random(canvas.getWidth(), 0), 0 /*(this.random(canvas.getHeight()*2, 15))*-1*/);
 		this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight())));
 		prmData.getOverlapProcessor().addOverlappable(this);
 	}

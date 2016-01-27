@@ -3,7 +3,6 @@ package entities;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,41 +14,35 @@ import gameframework.drawing.SpriteManagerDefaultImpl;
 import gameframework.game.GameData;
 import gameframework.game.GameEntity;
 import gameframework.motion.GameMovable;
-import gameframework.motion.MoveStrategyStraightLine;
+import gameframework.motion.MoveStrategy;
 import gameframework.motion.overlapping.Overlappable;
 
-public class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable{
-	
+public abstract class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable{
 	protected SpriteManagerDefaultImpl sprite;
-	final static int SHIP_SIZE = 50;
+	protected int enemySize;
 	protected Task task;
 	protected int score;
 	
-	public Enemy(GameCanvas canvas, GameData prmData) {
-		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/enemy.png", canvas), SHIP_SIZE, 1);
-		this.position = new Point(this.random(canvas.getWidth(), 0), (this.random(canvas.getHeight()*2, 15))*-1);
+	public void init(GameCanvas canvas, GameData prmData){
+		this.enemySize = this.getNewSize();
+		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage(this.getStringImagePath(), canvas), this.enemySize, 1);
 		this.sprite.reset();
-		this.score = 100;
-		MoveStrategyStraightLine ms = new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight()));
-		ms.setSpeed(7);
-		this.moveDriver.setStrategy(ms);
-		task = new Task(prmData);
-		task.run();
+		this.position = new Point(this.random(canvas.getWidth()-enemySize, 0), -enemySize);
+		this.score = this.getNewScore();
+		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
+		this.task = new Task(prmData);
+		this.task.run();
 		prmData.getOverlapProcessor().addOverlappable(this);
-	}
-	
-	public boolean isMovable() {
-        return true;
-    }
-
-	public Rectangle getBoundingBox() {
-		return new Rectangle(SHIP_SIZE, SHIP_SIZE);
 	}
 	
 	public int random(int higher, int lower){
 		return (int)(Math.random() * (higher-lower)) + lower;
 	}
-
+	
+	public Rectangle getBoundingBox() {
+		return new Rectangle(this.enemySize, this.enemySize);
+	}
+	
 	public void draw(Graphics g) {
 		this.sprite.draw(g, this.position);
 	}
@@ -59,13 +52,7 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
 		
 	}
 	
-	public void fire(GameData data){
-		data.getUniverse().addGameEntity(new Fireball(data.getCanvas(), data, position, 15, false));
-	}
-
-	Timer timer = new Timer();
-
-    class Task extends TimerTask {
+	class Task extends TimerTask {
     	GameData data;
     	
     	public Task(GameData data){
@@ -76,10 +63,19 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
             int delay = (3 + new Random().nextInt(3)) * 1000;
             timer.schedule(new Task(data), delay);
             fire(data);
-            //System.out.println(new Date());
         }
 
     }
+	
+	public boolean isMovable() {
+        return true;
+    }
+	
+	public void fire(GameData data){
+		data.getUniverse().addGameEntity(new Fireball(data.getCanvas(), data, position, 15, false));
+	}
+
+	Timer timer = new Timer();
     
     public void stopTask(){
     	task.cancel();
@@ -90,4 +86,8 @@ public class Enemy extends GameMovable implements Overlappable, GameEntity, Draw
     public int getScore() {
     	return this.score;
     }
+	public abstract String getStringImagePath();
+	public abstract int getNewSize();
+	public abstract int getNewScore();
+	public abstract MoveStrategy getNewMoveStrategy(GameCanvas canvas);
 }
