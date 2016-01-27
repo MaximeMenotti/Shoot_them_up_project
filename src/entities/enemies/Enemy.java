@@ -19,7 +19,8 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	protected SpriteManagerDefaultImpl sprite;
 	protected int enemySize;
 	protected int score;
-
+	protected boolean isActive = true;
+	
 	public abstract String getStringImagePath();
 	public abstract int getNewSize();
 	public abstract int getScore();
@@ -58,5 +59,12 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	
 	public void fire(GameData data){
 		data.getUniverse().addGameEntity(new Fireball(data.getCanvas(), data, position, 15, false));
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 }

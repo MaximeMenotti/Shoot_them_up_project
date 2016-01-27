@@ -20,6 +20,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	//these OFFSET is used for adjust the fireball to the spaceship.
 	final int OFFSET_X = 18;
 	final int OFFSET_Y = 0;
+	protected boolean isActive = true;
 	
 	protected SpriteManagerDefaultImpl sprite;
 	protected boolean isFriendly;
@@ -65,4 +66,10 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	public void oneStepMoveAddedBehavior() {		
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 }

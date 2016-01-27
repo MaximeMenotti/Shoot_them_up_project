@@ -13,42 +13,57 @@ public class OverlapSB extends OverlapRulesApplierDefaultImpl {
 	protected GameData data;
 			
 	public void overlapRule(Rock e1, Player e2){
-		data.getUniverse().removeGameEntity(e1);
-		decreaseLife();
-		removePlayer(e2);
+		if(e1.isActive()){
+			e1.setActive(false);
+			data.getUniverse().removeGameEntity(e1);
+			decreaseLife();
+			removePlayer(e2);			
+		}
 	}
 	
 	public void overlapRule(EnemyShip e1, Player e2){
-		System.out.println("outch");
-		e1.stopTask();
-		data.getUniverse().removeGameEntity(e1);
-		decreaseLife();
-		removePlayer(e2);
+		if(e1.isActive()) {
+			e1.setActive(false);
+			System.out.println("outch");
+			e1.stopTask();
+			data.getUniverse().removeGameEntity(e1);
+			decreaseLife();
+			removePlayer(e2);
+		}
 	}
 	
 	public void overlapRule(EnemyShip e1, Fireball e2){
 		if(e2.isFriendly()){
-			e1.stopTask();
-			data.getUniverse().removeGameEntity(e1);
-			data.getUniverse().removeGameEntity(e2);
-			data.getScore().setValue(data.getScore().getValue() + e1.getScore());
+			if(e1.isActive()) {
+				e1.setActive(false);
+				e1.stopTask();
+				data.getUniverse().removeGameEntity(e1);
+				data.getUniverse().removeGameEntity(e2);
+				data.getScore().setValue(data.getScore().getValue() + e1.getScore());
+			}
 		}
 	}
 	
 	public void overlapRule(Rock e1, Fireball e2){
 		if(e2.isFriendly()){
-			data.getUniverse().removeGameEntity(e1);
-			data.getUniverse().removeGameEntity(e2);
-			data.getScore().setValue(data.getScore().getValue() + e1.getScore());
+			if(e1.isActive()) {
+				e1.setActive(false);
+				data.getUniverse().removeGameEntity(e1);
+				data.getUniverse().removeGameEntity(e2);
+				data.getScore().setValue(data.getScore().getValue() + e1.getScore());
+			}
 		}
 	}
 	
 	public void overlapRule(Player e1, Fireball e2){
 		if(!e2.isFriendly()){
-			System.out.println("outch");
-			data.getUniverse().removeGameEntity(e2);
-			decreaseLife();
-			removePlayer(e1);
+			if(e2.isActive()) {
+				e2.setActive(false);
+				System.out.println("outch");
+				data.getUniverse().removeGameEntity(e2);
+				decreaseLife();
+				removePlayer(e1);
+			}
 		}
 	}
 
