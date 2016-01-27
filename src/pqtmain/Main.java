@@ -28,7 +28,6 @@ public class Main {
 
 		//display the windows
 		gameWindow.createGUI();
-		
 		level1(data);
 	}
 	

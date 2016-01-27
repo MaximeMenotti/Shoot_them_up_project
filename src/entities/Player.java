@@ -15,6 +15,7 @@ import gameframework.motion.MoveStrategyKeyboard;
 import gameframework.motion.MoveStrategyKeyboard8Dir;
 import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
+
 import java.awt.Rectangle;
 
 
@@ -28,10 +29,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 
     public Player(GameCanvas canvas, GameData prmData) {
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/resources/playersprite.png", canvas), SHIP_SIZE, 3);
-
         this.position = new Point(canvas.getWidth()/2, canvas.getHeight()/2);
-        
-        //initialize sprite manager
         this.sprite.reset();
 
         //for playing with keyboard
@@ -39,19 +37,10 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         
         Shoot guns = new Shoot(prmData, this);
         
-        this.moveDriver = new GameMovableDriverDefaultImpl();
-        //this.moveDriver.setStrategy(new MoveStrategyStraightLine(new Point(500, 500), new Point(600, 600)));
-        
+        this.moveDriver = new GameMovableDriverDefaultImpl();        
         canvas.addKeyListener(direction);
         canvas.addKeyListener(guns);
         this.moveDriver.setStrategy(direction);
-        
-        /*moveDriver.setmoveBlockerChecker(gameData.getMoveBlockerChecker());
-       
-        setDriver(moveDriver);
-        gameData.getCanvas().addKeyListener(this);
-
-        gameData.getLife().addObserver(this);*/
     }
 
     public void draw(Graphics g) {
