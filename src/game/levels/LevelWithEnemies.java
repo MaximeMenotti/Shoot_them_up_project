@@ -1,8 +1,8 @@
-package game;
+package game.levels;
 
 import java.util.TimerTask;
 
-import entities.EnemyShip;
+import entities.enemies.EnemyShip;
 import gameframework.game.GameData;
 
 public class LevelWithEnemies extends Level{	

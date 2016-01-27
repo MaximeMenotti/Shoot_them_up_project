@@ -1,9 +1,11 @@
-package game;
+package game.levels;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import entities.Player;
+import game.GameUniverseViewPortSB;
+import game.OverlapSB;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 

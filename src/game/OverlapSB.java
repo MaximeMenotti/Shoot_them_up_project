@@ -3,6 +3,8 @@ package game;
 import java.util.Vector;
 
 import entities.*;
+import entities.enemies.EnemyShip;
+import entities.enemies.Rock;
 import gameframework.game.GameData;
 import gameframework.motion.overlapping.*;
 

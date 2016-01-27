@@ -1,7 +1,7 @@
 package pqtmain;
 
-import game.LevelWithEnemies;
-import game.LevelWithRocks;
+import game.levels.LevelWithEnemies;
+import game.levels.LevelWithRocks;
 import gameframework.game.*;
 import gameframework.gui.*;
 

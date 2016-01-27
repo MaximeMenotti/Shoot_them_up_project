@@ -1,8 +1,8 @@
-package game;
+package game.levels;
 
 import java.util.TimerTask;
 
-import entities.Rock;
+import entities.enemies.Rock;
 import gameframework.game.GameData;
 
 public class LevelWithRocks extends Level{	

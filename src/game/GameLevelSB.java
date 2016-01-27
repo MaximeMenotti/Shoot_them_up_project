@@ -1,7 +1,7 @@
 package game;
 
 import entities.Player;
-import entities.Rock;
+import entities.enemies.Rock;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 

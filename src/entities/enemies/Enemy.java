@@ -1,9 +1,10 @@
-package entities;
+package entities.enemies;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import entities.Fireball;
 import gameframework.drawing.Drawable;
 import gameframework.drawing.DrawableImage;
 import gameframework.drawing.GameCanvas;
