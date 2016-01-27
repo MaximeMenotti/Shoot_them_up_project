@@ -25,7 +25,7 @@ public class LevelWithRocks extends GameLevelDefaultImpl{
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
 		Player aPlayer = new Player(data.getCanvas(),data);
 		for(int i = 0 ; i < nbRocks; i ++){
-			data.getUniverse().addGameEntity(new Rock(data.getCanvas(), data, ROCK_SPEED));
+			data.getUniverse().addGameEntity(new Rock(data.getCanvas(), data));
 		}
 		data.getUniverse().addGameEntity(aPlayer);
 		

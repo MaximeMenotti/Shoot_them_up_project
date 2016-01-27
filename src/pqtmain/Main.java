@@ -1,6 +1,4 @@
 package pqtmain;
-import java.awt.BorderLayout;
-import java.awt.Menu;
 
 import game.LevelWithEnemies;
 import game.LevelWithRocks;
@@ -31,7 +29,7 @@ public class Main {
 		//display the windows
 		gameWindow.createGUI();
 		
-		level2(data);
+		level1(data);
 	}
 	
 	public static void level1(GameData data){
