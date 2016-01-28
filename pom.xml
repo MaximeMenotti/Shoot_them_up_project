@@ -26,7 +26,7 @@
   			<artifactId>gameframework</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
   			<scope>system</scope>
-  			<systemPath>/home/valentin/Documents/dev_Java/lille-game-framework/target/gameframework-0.0.1-SNAPSHOT.jar</systemPath>
+  			<systemPath>/home/maxime/git/lille-game-framework/target/gameframework-0.0.1-SNAPSHOT.jar</systemPath>
   		</dependency>
   	</dependencies>
   </dependencyManagement>
