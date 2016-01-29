@@ -20,26 +20,26 @@ public class Main {
 		//Settings.
 		GameConfiguration configuration = new GameConfiguration(NB_ROWS,NB_COLUMNS,SPRITE_SIZE,DEFAULT_NB_LIVES);
 		GameData data = new GameData(configuration);
+                
+                GameDefaultImpl game = new GameDefaultImpl(data);
 
 		//Creation of the game window.
-		GameWindow gameWindow = new GameWindow(WINDOWS_NAME, data.getCanvas(), configuration, 
-				new GameStatusBarElement<Integer>("Score:", data.getScore()),
-				new GameStatusBarElement<Integer>("Life:", data.getLife()));
+		GameWindow gameWindow = new GameWindow(WINDOWS_NAME, data.getCanvas(), data);
 
 		//display the windows
 		gameWindow.createGUI();
-		level2(data);
+                
+                level1(data);
+                game.start();
 	}
 	
 	public static void level1(GameData data){
 		LevelWithRocks level = new LevelWithRocks(data,25);
 		data.addLevel(level);
-		level.start();
 	}
 	
 	public static void level2(GameData data){
 		LevelWithEnemies level2 = new LevelWithEnemies(data,15);
 		data.addLevel(level2);
-		level2.start();
 	}
 }
