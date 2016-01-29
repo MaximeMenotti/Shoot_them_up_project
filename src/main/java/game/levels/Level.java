@@ -4,10 +4,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import entities.Player;
+import entities.Wall;
 import game.GameUniverseViewPortSB;
 import game.OverlapSB;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
+import java.util.ArrayList;
 
 public abstract class Level extends GameLevelDefaultImpl{
 	protected static int nbEnemies;
@@ -28,10 +30,17 @@ public abstract class Level extends GameLevelDefaultImpl{
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
-		Player aPlayer = new Player(data.getCanvas(),data);
+		
+                ArrayList<Wall> walls = new ArrayList<Wall>();
+                for(int i = 0 ; i < 4 ; i++){
+                    walls.add(new Wall(data.getCanvas()));
+                    data.getUniverse().addGameEntity(walls.get(i));
+                }
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
+                Player aPlayer = new Player(data.getCanvas(),data);
 		data.getUniverse().addGameEntity(aPlayer);
+                
 	}
 	
 }

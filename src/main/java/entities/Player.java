@@ -41,6 +41,9 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         canvas.addKeyListener(direction);
         canvas.addKeyListener(guns);
         this.moveDriver.setStrategy(direction);
+
+        this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
+        this.setDriver(moveDriver);
     }
 
     public void draw(Graphics g) {
