@@ -30,15 +30,13 @@ public abstract class Level extends GameLevelDefaultImpl{
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
-		
-                ArrayList<Wall> walls = new ArrayList<Wall>();
-                for(int i = 0 ; i < 4 ; i++){
-                    walls.add(new Wall(data.getCanvas()));
-                    data.getUniverse().addGameEntity(walls.get(i));
-                }
+		Player aPlayer = new Player(data.getCanvas(),data);
+
+                data.getUniverse().addGameEntity(new Wall(data.getCanvas()));
+                
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
-                Player aPlayer = new Player(data.getCanvas(),data);
+                
 		data.getUniverse().addGameEntity(aPlayer);
                 
 	}

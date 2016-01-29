@@ -15,19 +15,21 @@ public class Wall implements MoveBlocker, GameEntity, Drawable {
 
 	protected SpriteManagerDefaultImpl sprite;
 	protected Point position = new Point();
+        
+        final protected int WALL_SIZE = 50;
 
+        public Wall() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
 	public Wall(GameCanvas canvas) {
-		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/wall.png", canvas), 50, 1);
+		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/wall.png", canvas), WALL_SIZE, 1);
 		this.position = new Point(canvas.getWidth()/4, canvas.getHeight()/4);
 		this.sprite.reset();
 	}
 
-    Wall() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-	
 	public Rectangle getBoundingBox() {
-		return new Rectangle(1, 1);
+		return new Rectangle(WALL_SIZE, WALL_SIZE);
 	}
 
 	public boolean isMovable() {

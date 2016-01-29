@@ -15,7 +15,7 @@ public class Main {
 		final int NB_ROWS = 70;
 		final int NB_COLUMNS = 120;
 		final int SPRITE_SIZE = 10;
-		final int DEFAULT_NB_LIVES = 3 ;
+		final int DEFAULT_NB_LIVES = 3;
 		
 		//Settings.
 		GameConfiguration configuration = new GameConfiguration(NB_ROWS,NB_COLUMNS,SPRITE_SIZE,DEFAULT_NB_LIVES);

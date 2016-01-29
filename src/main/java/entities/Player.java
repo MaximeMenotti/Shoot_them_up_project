@@ -20,6 +20,8 @@ import java.awt.Rectangle;
 
 
 import game.Shoot;
+import gameframework.motion.blocking.MoveBlockerChecker;
+import gameframework.motion.blocking.MoveBlockerRulesApplierDefaultImpl;
 
 public class Player extends GameMovable implements Overlappable, GameEntity, Drawable {
 
@@ -28,6 +30,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     final protected int SHIP_SIZE = 50;
 
     public Player(GameCanvas canvas, GameData prmData) {
+        super();
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", canvas), SHIP_SIZE, 3);
         this.position = new Point(canvas.getWidth()/2, canvas.getHeight()/2);
         this.sprite.reset();
@@ -37,7 +40,6 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         
         Shoot guns = new Shoot(prmData, this);
         
-        this.moveDriver = new GameMovableDriverDefaultImpl();        
         canvas.addKeyListener(direction);
         canvas.addKeyListener(guns);
         this.moveDriver.setStrategy(direction);
@@ -67,8 +69,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     }
     
 	public Rectangle getBoundingBox() {
-		Rectangle rectangle = new Rectangle(this.SHIP_SIZE, this.SHIP_SIZE);
-        return rectangle;
+            return new Rectangle(this.SHIP_SIZE, this.SHIP_SIZE);
 	}
 	
 	public Point getPosition(){
