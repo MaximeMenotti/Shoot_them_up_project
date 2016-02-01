@@ -24,6 +24,15 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	protected boolean isFriendly;
 	protected GameData data;
 
+    /**
+     * The constructor
+     *
+     * @param canvas for drawing fireball to the screen
+     * @param prmData   the game data
+     * @param position  the initial fireball's position
+     * @param speed the fireball'speed
+     */
+    
 	public Fireball(GameData prmData, Point position, int speed, boolean isFriendly) {
 		String path;
 		MoveStrategyStraightLine ms;
@@ -45,18 +54,36 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 		prmData.getOverlapProcessor().addOverlappable(this);
 	}
 	
+    /**
+     * get the dimension of this fireball
+     * @return a rectangle who defined the object's borders
+     */
 	public Rectangle getBoundingBox() {
 		return new Rectangle(BULLET_SIZE, BULLET_SIZE);
 	}
 
+    /**
+     * define if the fireball is a movable obect
+     *
+     * @return true because fireball isn't a static object
+     */
 	public boolean isMovable() {
 		return true;
 	}
 	
+    /**
+     * draw the fireball on the canvas at the defined position
+     * @param g
+     */
 	public void draw(Graphics g) {
 	        this.sprite.draw(g, this.position);
 	}
 	
+    /**
+     * return the boolean value for knowing if this fireball is friendly or enemy
+     * @return true if this was shoot by the player
+     *         false if this was shoot by an enemy
+     */
 	public boolean isFriendly(){
 		return isFriendly;
 	}
@@ -65,13 +92,26 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	public void oneStepMoveAddedBehavior() {		
 	}
 
+    /**
+     * Return a boolean value : true if the fireball is active and false on the other case (not active)
+     * @return the active value
+     */
 	public boolean isActive() {
 		return isActive;
 	}
+    
+    /**
+     *define with the boolean parameter if the fireball is active
+     * @oarameter the value of active
+     */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 
+    /**
+     * Call when the fireball touch an other entities ( player or ennemie) desactive the boolean value of active
+     * and remove this (fireball will be invisible on the screen)
+     */
 	public void hit() {
 		this.setActive(false);
 		data.getUniverse().removeGameEntity(this);

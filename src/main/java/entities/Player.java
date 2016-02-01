@@ -28,13 +28,20 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     
     final protected int SHIP_SIZE = 50;
 
+    /**
+     * Constructor of player
+     * @param canvas the gamecanvas for drawing player
+     * @param prmData the game data
+     */
     public Player(GameData prmData) {
         super();
         this.data = prmData;
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", data.getCanvas()), SHIP_SIZE, 3);
         this.position = new Point(data.getCanvas().getWidth()/2-SHIP_SIZE, data.getCanvas().getHeight()-SHIP_SIZE);
+        //initialize sprite manager
         this.sprite.reset();
 
+        //for playing with keyboard
         MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
         Shoot guns = new Shoot(prmData, this);
@@ -50,10 +57,22 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 		}
     }
 
+    /**
+     * draw the player spaceship on the canvas at the defined position
+     * sprite the player for see a different view if it go to left or right or
+     * if it static
+     * @param g
+     */
     public void draw(Graphics g) {
         this.sprite.draw(g, this.position);
     }
 
+    /**
+     * define if the player is a movable obect
+     *
+     * @return true because the player space ship move at left to right
+     * or right to left
+     */
     public boolean isMovable() {
         return true;
     }
@@ -70,14 +89,26 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         }
     }
     
-	public Rectangle getBoundingBox() {
+    /**
+     * get the dimension of the player
+     * @return a rectangle who defined the object's borders
+     */
+    public Rectangle getBoundingBox() {
             return new Rectangle( position.x, position.y, SHIP_SIZE, SHIP_SIZE);
 	}
-	
+    
+    /**
+     * get the player position
+     * @return a point of actual player position
+     */
 	public Point getPosition(){
 		return this.position;
 	}
 
+    /**
+     * call when the player was touched by an other entity, if he has got life, the life'score was decrease
+     * and if there aren't any life, we remove the player on the screen
+     */
 	public void hit() {
 		if(data.getLife().getValue() == 0){
 			data.getUniverse().removeGameEntity(this);
@@ -88,6 +119,10 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 		}
 	}
 
+    /**
+     * Return the boolean value true beacause the player is always an active entity
+     * @return the active value
+     */
 	public boolean isActive() {
 		return true;
 	}
