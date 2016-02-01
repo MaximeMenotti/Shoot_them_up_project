@@ -17,7 +17,12 @@ public abstract class Level extends GameLevelDefaultImpl{
 
 	public abstract TimerTask getTimerTask();
 	
-	public Level(GameData data, int nbEnemiesToAdd) {
+	/**
+     * the constructor : defined number of enemy we must create and defined the game's rules
+     * @param : the game data
+     * @param : the enemy 's number we will create
+     */
+    public Level(GameData data, int nbEnemiesToAdd) {
 		super(data);
 		nbEnemies = nbEnemiesToAdd;
 		OverlapRulesEntities rules = new OverlapRulesEntities();
@@ -26,6 +31,9 @@ public abstract class Level extends GameLevelDefaultImpl{
 		data.getOverlapProcessor().processOverlapsAll();
 	}
 	
+    /**
+     * initializes the level with a number of defined enemy
+     */
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
@@ -37,6 +45,9 @@ public abstract class Level extends GameLevelDefaultImpl{
                 
 	}
 	
+    /**
+     * created the wall around the canvas to avoid the player'ship to leave the playing area
+     */
 	public void createWalls(){
 		//North
         data.getUniverse().addGameEntity(new Wall(0,0,data.getCanvas().getWidth(), 1));

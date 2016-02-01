@@ -7,11 +7,19 @@ import gameframework.game.GameData;
 
 public class GameUniverseViewPortSB extends GameUniverseViewPortDefaultImpl {
 	
-	public GameUniverseViewPortSB (GameData data) {
+    /**
+     * constructor
+     * @param data the game data
+     */
+    public GameUniverseViewPortSB (GameData data) {
 		super(data);
 	}
 	
-	protected URL backgroundImage() {
+    /**
+     * get the picture's path for load the game's wallpaper
+     * @return the picture path
+     */
+    protected URL backgroundImage() {
 		return this.getClass().getResource("/images/spaceBG.jpg");
 	}
 
