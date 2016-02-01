@@ -23,7 +23,7 @@ public class LevelWithEnemies extends Level{
 			         timer.purge();
 			         return;
 			     }
-				data.getUniverse().addGameEntity(new EnemyShip(data.getCanvas(), data));
+				data.getUniverse().addGameEntity(new EnemyShip(data));
 			}	
 		};
 	}

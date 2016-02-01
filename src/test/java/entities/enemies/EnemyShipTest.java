@@ -7,7 +7,7 @@ public class EnemyShipTest extends EnemyTest{
 
 	@Override
 	public Enemy createInstance(GameCanvas canvas, GameData prmData) {
-		return new EnemyShip(canvas, prmData);
+		return new EnemyShip(prmData);
 	}
 
 	@Override

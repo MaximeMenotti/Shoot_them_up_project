@@ -25,7 +25,7 @@ public class LevelWithRocks extends Level{
 			         timer.purge();
 			         return;
 			     }
-				data.getUniverse().addGameEntity(new Rock(data.getCanvas(), data));
+				data.getUniverse().addGameEntity(new Rock(data));
 			}	
 		};
 	}

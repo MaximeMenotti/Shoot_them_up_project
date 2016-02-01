@@ -5,28 +5,31 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import gameframework.assets.Sound;
 import gameframework.drawing.GameCanvas;
 import gameframework.game.GameData;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.MoveStrategyStraightLine;
 
 public class EnemyShip extends Enemy {	
+	
 	protected Task task;
-	public EnemyShip(GameCanvas canvas, GameData prmData) {
-		this.init(canvas, prmData);
+	protected Timer timer = new Timer();
+	protected GameData data;
+	protected Sound boom;
+	
+	public EnemyShip(GameData prmData) {
+		this.data = prmData;
+		this.init(prmData.getCanvas(), prmData);
 		this.task = new Task(prmData);
 		this.task.run();
+		try {
+			boom = new Sound("/sounds/boom.wav");
+		} catch (Exception e) {}
 	}
 	
-	Timer timer = new Timer();
-    
-    public void stopTask(){
-    	task.cancel();
-    	timer.cancel();
-    	timer.purge();
-    }
 	
-	class Task extends TimerTask {
+	public class Task extends TimerTask {
     	GameData data;
     	
     	public Task(GameData data){
@@ -41,6 +44,12 @@ public class EnemyShip extends Enemy {
 
     }
 
+	public void stopTask(){
+		task.cancel();
+		timer.cancel();
+		timer.purge();
+	}
+	
 	@Override
 	public String getStringImagePath() {
 		return "/images/enemy.png" ;
@@ -56,11 +65,18 @@ public class EnemyShip extends Enemy {
 		return 100;
 	}
 
-
 	@Override
 	public MoveStrategy getNewMoveStrategy(GameCanvas canvas) {
 		MoveStrategyStraightLine ms = new MoveStrategyStraightLine(new Point(0, 0), new Point(0, canvas.getHeight()));
 		ms.setSpeed(this.random(12, 5));
 		return ms;
+	}
+
+	public void hit() {
+		this.stopTask();
+		this.setActive(false);
+		boom.play();
+		data.getScore().setValue(data.getScore().getValue() + this.getScore());
+		data.getUniverse().removeGameEntity(this);
 	}
 }

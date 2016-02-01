@@ -1,16 +1,15 @@
 package entities;
 
+import gameframework.assets.Sound;
 import gameframework.drawing.Drawable;
 import java.awt.Graphics;
 import java.awt.Point;
 
 import gameframework.drawing.DrawableImage;
-import gameframework.drawing.GameCanvas;
 import gameframework.drawing.SpriteManagerDefaultImpl;
 import gameframework.game.GameData;
 import gameframework.game.GameEntity;
 import gameframework.motion.GameMovable;
-import gameframework.motion.GameMovableDriverDefaultImpl;
 import gameframework.motion.MoveStrategyKeyboard;
 import gameframework.motion.MoveStrategyKeyboard8Dir;
 import gameframework.motion.SpeedVector;
@@ -18,34 +17,37 @@ import gameframework.motion.overlapping.Overlappable;
 
 import java.awt.Rectangle;
 
-
 import game.Shoot;
-import gameframework.motion.blocking.MoveBlockerChecker;
-import gameframework.motion.blocking.MoveBlockerRulesApplierDefaultImpl;
+import gameframework.motion.blocking.MoveBlocker;
 
-public class Player extends GameMovable implements Overlappable, GameEntity, Drawable {
+public class Player extends GameMovable implements Overlappable, GameEntity, Drawable, MoveBlocker, Entity {
 
     protected SpriteManagerDefaultImpl sprite;
+    protected GameData data;
+    protected Sound outch;
     
     final protected int SHIP_SIZE = 50;
 
-    public Player(GameCanvas canvas, GameData prmData) {
+    public Player(GameData prmData) {
         super();
-        this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", canvas), SHIP_SIZE, 3);
-        this.position = new Point(canvas.getWidth()/2, canvas.getHeight()/2);
+        this.data = prmData;
+        this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", data.getCanvas()), SHIP_SIZE, 3);
+        this.position = new Point(data.getCanvas().getWidth()/2-SHIP_SIZE, data.getCanvas().getHeight()-SHIP_SIZE);
         this.sprite.reset();
 
-        //for playing with keyboard
         MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
         Shoot guns = new Shoot(prmData, this);
         
-        canvas.addKeyListener(direction);
-        canvas.addKeyListener(guns);
+        data.getCanvas().addKeyListener(direction);
+        data.getCanvas().addKeyListener(guns);
         this.moveDriver.setStrategy(direction);
-
         this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
-        this.setDriver(moveDriver);
+        
+        try {
+			outch = new Sound("/sounds/outch.wav");
+		} catch (Exception e) {
+		}
     }
 
     public void draw(Graphics g) {
@@ -69,11 +71,25 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     }
     
 	public Rectangle getBoundingBox() {
-            return new Rectangle(this.SHIP_SIZE, this.SHIP_SIZE);
+            return new Rectangle( position.x, position.y, SHIP_SIZE, SHIP_SIZE);
 	}
 	
 	public Point getPosition(){
 		return this.position;
+	}
+
+	public void hit() {
+		if(data.getLife().getValue() == 0){
+			data.getUniverse().removeGameEntity(this);
+		}
+		else {
+			outch.play();
+			data.decreaseLife(1);
+		}
+	}
+
+	public boolean isActive() {
+		return true;
 	}
 		
 }

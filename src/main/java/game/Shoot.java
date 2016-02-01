@@ -20,22 +20,20 @@ public class Shoot implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		
 	}
 
 	public void keyReleased(KeyEvent arg0) {
-		if(arg0.getKeyCode() == MAIN_GUN){			
-			fire("PRESSED", arg0);
+		if(arg0.getKeyCode() == MAIN_GUN){		
+			fire(arg0);
 		}
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		
 	}
 	
-	public void fire(String from, KeyEvent e){
+	public void fire(KeyEvent e){
 		if( data.getLife().getValue() > 0 ){
-			data.getUniverse().addGameEntity(new Fireball(data.getCanvas(), data, ship.getPosition(), 15, true));
+			data.getUniverse().addGameEntity(new Fireball(data, ship.getPosition(), 15, true));
 		}
 	}
 

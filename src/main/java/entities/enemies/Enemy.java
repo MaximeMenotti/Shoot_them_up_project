@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import entities.Entity;
 import entities.Fireball;
 import gameframework.drawing.Drawable;
 import gameframework.drawing.DrawableImage;
@@ -15,16 +16,11 @@ import gameframework.motion.GameMovable;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.overlapping.Overlappable;
 
-public abstract class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable{
-	protected SpriteManagerDefaultImpl sprite;
-	protected int enemySize;
-	protected int score;
-	protected boolean isActive = true;
+public abstract class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable, Entity{
 	
-	public abstract String getStringImagePath();
-	public abstract int getNewSize();
-	public abstract int getScore();
-	public abstract MoveStrategy getNewMoveStrategy(GameCanvas canvas);
+	protected SpriteManagerDefaultImpl sprite;
+	protected int enemySize, score;
+	protected boolean isActive = true;
 	
 	public void init(GameCanvas canvas, GameData prmData){
 		this.enemySize = this.getNewSize();
@@ -35,6 +31,11 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
 		prmData.getOverlapProcessor().addOverlappable(this);
 	}
+	
+	protected abstract String getStringImagePath();
+	protected abstract int getNewSize();
+	protected abstract int getScore();
+	protected abstract MoveStrategy getNewMoveStrategy(GameCanvas canvas);
 	
 	public int random(int higher, int lower){
 		return (int)(Math.random() * (higher-lower)) + lower;
@@ -58,7 +59,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
     }
 	
 	public void fire(GameData data){
-		data.getUniverse().addGameEntity(new Fireball(data.getCanvas(), data, position, 15, false));
+		data.getUniverse().addGameEntity(new Fireball(data, position, 15, false));
 	}
 
 	public boolean isActive() {

@@ -4,32 +4,32 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import gameframework.drawing.Drawable;
-import gameframework.drawing.DrawableImage;
-import gameframework.drawing.GameCanvas;
-import gameframework.drawing.SpriteManagerDefaultImpl;
 import gameframework.game.GameEntity;
 import gameframework.motion.blocking.MoveBlocker;
 
-public class Wall implements MoveBlocker, GameEntity, Drawable {
+public class Wall implements MoveBlocker, GameEntity {
 
-	protected SpriteManagerDefaultImpl sprite;
-	protected Point position = new Point();
-        
-        final protected int WALL_SIZE = 50;
-
-        public Wall() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-	public Wall(GameCanvas canvas) {
-		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/wall.png", canvas), WALL_SIZE, 1);
-		this.position = new Point(canvas.getWidth()/4, canvas.getHeight()/4);
-		this.sprite.reset();
+	/*
+	 * Attributes
+	 */
+	protected Point position;
+   	protected int width;
+   	protected int height;
+       
+   	/*
+   	 * Constructors
+   	 */
+	public Wall(int x, int y, int width, int height) {
+		this.position = new Point(x, y);
+		this.width = width;
+		this.height = height;
 	}
 
+	/*
+	 * Methods
+	 */
 	public Rectangle getBoundingBox() {
-		return new Rectangle(WALL_SIZE, WALL_SIZE);
+		return new Rectangle(position.x, position.y, width , height);
 	}
 
 	public boolean isMovable() {
@@ -37,7 +37,10 @@ public class Wall implements MoveBlocker, GameEntity, Drawable {
 	}
 
 	public void draw(Graphics g) {
-		this.sprite.draw(g, this.position);
+	}
+	
+	public Point getPosition(){
+		return this.position;
 	}
 
 }

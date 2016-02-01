@@ -35,4 +35,8 @@ public class RockMock extends Enemy{
 		this.moveDriver.setStrategy(ms);
 		return ms;
 	}
+
+	public void hit() {
+				
+	}
 }
