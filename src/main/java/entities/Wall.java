@@ -10,7 +10,7 @@ import gameframework.motion.blocking.MoveBlocker;
 public class Wall implements MoveBlocker, GameEntity {
 
 	protected Point position;
-   	protected int width;
+	protected int width;
    	protected int height;
     
     /**
@@ -52,6 +52,21 @@ public class Wall implements MoveBlocker, GameEntity {
      */
 	public Point getPosition(){
 		return this.position;
+	}
+	
+
+   	/**
+   	 * @return return the width of the wall
+   	 */
+   	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @return return the height of the wall
+	 */
+	public int getHeight() {
+		return height;
 	}
 
 }
