@@ -25,7 +25,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     protected SpriteManagerDefaultImpl sprite;
     protected GameData data;
     protected Sound outch;
-    
+    protected Shoot shoot;
     final protected int SHIP_SIZE = 50;
 
     /**
@@ -33,9 +33,14 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
      * @param canvas the gamecanvas for drawing player
      * @param prmData the game data
      */
-    public Player(GameData prmData) {
+    private Player() {
         super();
-        this.data = prmData;
+        
+    }
+    
+    public void init(GameData prmData){
+    	this.data = prmData;
+        
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", data.getCanvas()), SHIP_SIZE, 3);
         this.position = new Point(data.getCanvas().getWidth()/2-SHIP_SIZE, data.getCanvas().getHeight()-SHIP_SIZE);
         //initialize sprite manager
@@ -44,18 +49,23 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         //for playing with keyboard
         MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
-        Shoot guns = new Shoot(prmData, this);
+        this.shoot = new Shoot(prmData, this);
         
         data.getCanvas().addKeyListener(direction);
-        data.getCanvas().addKeyListener(guns);
+        data.getCanvas().addKeyListener(this.shoot);
         this.moveDriver.setStrategy(direction);
         this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
-        
         try {
 			outch = new Sound("/sounds/outch.wav");
 		} catch (Exception e) {
 		}
     }
+    
+    private static Player INSTANCE = new Player();
+    
+	public static Player getInstance(){	
+		return INSTANCE;
+	}
 
     /**
      * draw the player spaceship on the canvas at the defined position
@@ -68,7 +78,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     }
 
     /**
-     * define if the player is a movable obect
+     * define if the player is a movable object
      *
      * @return true because the player space ship move at left to right
      * or right to left
@@ -120,7 +130,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 	}
 
     /**
-     * Return the boolean value true beacause the player is always an active entity
+     * Return the boolean value true because the player is always an active entity
      * @return the active value
      */
 	public boolean isActive() {

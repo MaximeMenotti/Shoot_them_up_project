@@ -11,10 +11,11 @@ import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 
 public abstract class Level extends GameLevelDefaultImpl{
-	protected static int nbEnemies;
-	public static int count = 0;
-	public static Timer timer = new Timer();
-
+	protected int nbEnemies;
+	protected int count = 0;
+	protected boolean isFinished;
+	protected Timer timer = new Timer();
+	
 	public abstract TimerTask getTimerTask();
 	
 	/**
@@ -37,12 +38,20 @@ public abstract class Level extends GameLevelDefaultImpl{
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
-		Player aPlayer = new Player(data);
+		Player aPlayer = Player.getInstance();
+		Player.getInstance().init(this.data);
 		createWalls();
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
 		data.getUniverse().addGameEntity(aPlayer);
-                
+	}
+	
+	@Override
+	public void end() {
+		this.getTimerTask().cancel();
+		this.isFinished = true;
+		stopGameLoop = true;
+		data.getUniverse().removeAllGameEntities();
 	}
 	
     /**

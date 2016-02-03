@@ -53,7 +53,7 @@ public class Shoot implements KeyListener {
      * @param e the key event
      */
 	public void fire(KeyEvent e){
-		if( data.getLife().getValue() > 0 ){
+		if( data.getLife().getValue() > 0 && ship != null){
 			data.getUniverse().addGameEntity(new Fireball(data, ship.getPosition(), 15, true));
 		}
 	}

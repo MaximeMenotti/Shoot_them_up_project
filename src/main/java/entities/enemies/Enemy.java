@@ -32,7 +32,6 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 		this.position = new Point(this.random(canvas.getWidth()-enemySize, 0), -enemySize);
 		this.score = this.getScore();
 		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
-		prmData.getOverlapProcessor().addOverlappable(this);
 	}
 	
     /**
@@ -87,7 +86,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
      * with this method, an entity like player or spaceship enemy can shoot fireball 
      */
 	public void fire(GameData data){
-		data.getUniverse().addGameEntity(new Fireball(data, position, 15, false));
+		new Fireball(data, position, 15, false);
 	}
 
     /**
