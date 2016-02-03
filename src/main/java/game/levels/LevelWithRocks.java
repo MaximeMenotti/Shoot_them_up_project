@@ -2,7 +2,6 @@ package game.levels;
 
 import java.util.TimerTask;
 
-import entities.enemies.EnemyShip;
 import entities.enemies.Rock;
 import gameframework.game.GameData;
 
@@ -29,11 +28,6 @@ public class LevelWithRocks extends Level{
 			public void run() 
 			{
 				count++;
-				if (count >= nbEnemies || isFinished) {
-					timer.cancel();
-					timer.purge();
-					return;
-				}
 				data.getUniverse().addGameEntity(new Rock(data));
 			}	
 		};

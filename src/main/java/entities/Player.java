@@ -29,14 +29,22 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     final protected int SHIP_SIZE = 50;
 
     /**
-     * Constructor of player
-     * @param canvas the gamecanvas for drawing player
-     * @param prmData the game data
+     * Constructor private of Player because of the using of the singleton design pattern
+     * 
      */
     private Player() {
         super();
-        
     }
+    
+    private static Player INSTANCE;
+    
+	public static Player getInstance(GameData data){	
+		if(INSTANCE == null){
+			INSTANCE = new Player();
+			INSTANCE.init(data);
+		}
+		return INSTANCE;
+	}
     
     public void init(GameData prmData){
     	this.data = prmData;
@@ -61,11 +69,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 		}
     }
     
-    private static Player INSTANCE = new Player();
     
-	public static Player getInstance(){	
-		return INSTANCE;
-	}
 
     /**
      * draw the player spaceship on the canvas at the defined position
