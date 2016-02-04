@@ -14,7 +14,7 @@ import gameframework.motion.MoveStrategyStraightLine;
 import gameframework.motion.overlapping.Overlappable;
 
 public class Fireball extends GameMovable implements Overlappable, GameEntity, Drawable, Entity{
-	
+
 	final static int BULLET_SIZE = 12;
 	//these OFFSET is used for adjust the fireball to the spaceship.
 	final int OFFSET_X = 18;
@@ -32,7 +32,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
      * @param position  the initial fireball's position
      * @param speed the fireball'speed
      */
-    
+
 	public Fireball(GameData prmData, Point position, int speed, boolean isFriendly) {
 		String path;
 		MoveStrategyStraightLine ms;
@@ -48,11 +48,11 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 		ms.setSpeed(speed);
 		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage(path, data.getCanvas()), BULLET_SIZE, 1);
 		this.position = new Point((int) position.getX() + OFFSET_X, (int) position.getY() + OFFSET_Y);
-		this.sprite.reset();			
+		this.sprite.reset();
 		this.moveDriver.setStrategy(ms);
 		this.isFriendly = isFriendly;
 	}
-	
+
     /**
      * get the dimension of this fireball
      * @return a rectangle who defined the object's borders
@@ -69,7 +69,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	public boolean isMovable() {
 		return true;
 	}
-	
+
     /**
      * draw the fireball on the canvas at the defined position
      * @param g
@@ -77,7 +77,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	public void draw(Graphics g) {
 	        this.sprite.draw(g, this.position);
 	}
-	
+
     /**
      * return the boolean value for knowing if this fireball is friendly or enemy
      * @return true if this was shoot by the player
@@ -88,7 +88,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	}
 
 	@Override
-	public void oneStepMoveAddedBehavior() {		
+	public void oneStepMoveAddedBehavior() {
 	}
 
     /**
@@ -98,7 +98,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 	public boolean isActive() {
 		return isActive;
 	}
-    
+
     /**
      *define with the boolean parameter if the fireball is active
      * @oarameter the value of active
@@ -111,11 +111,10 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
      * Call when the fireball touch an other entities ( player or ennemie) desactive the boolean value of active
      * and remove this (fireball will be invisible on the screen)
      */
-	public void hit() {
-		this.setActive(false);
-		data.getUniverse().removeGameEntity(this);
-		data.getLevels().get(0).end();
-	}
+		 public void hit() {
+	 		this.setActive(false);
+	 		data.getUniverse().removeGameEntity(this);
+	 	}
 
 	public static int getBulletSize() {
 		return BULLET_SIZE;

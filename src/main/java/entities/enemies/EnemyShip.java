@@ -5,18 +5,16 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import gameframework.assets.Sound;
 import gameframework.drawing.GameCanvas;
 import gameframework.game.GameData;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.MoveStrategyStraightLine;
 
-public class EnemyShip extends Enemy {	
-	
+public class EnemyShip extends Enemy {
+
 	protected Task task;
 	protected Timer timer = new Timer();
-	protected Sound boom;
-	
+
     /**
      * the constructor of one enemy : this is a spaceship who can shoot to the
      * player direction and hitting him.
@@ -28,15 +26,12 @@ public class EnemyShip extends Enemy {
 		super(prmData);
 		this.task = new Task(prmData);
 		this.task.run();
-		try {
-			boom = new Sound("/sounds/boom.wav");
-		} catch (Exception e) {}
 	}
-	
-	
+
+
 	public class Task extends TimerTask {
     	GameData data;
-    	
+
         /**
          * constructor of the timer task
          * @param data the game data
@@ -44,8 +39,8 @@ public class EnemyShip extends Enemy {
         public Task(GameData data){
     		this.data = data;
     	}
-        
-        
+
+
         /**
          * run the timer, with this method, this enemy shooting
          */
@@ -66,7 +61,7 @@ public class EnemyShip extends Enemy {
 		timer.cancel();
 		timer.purge();
 	}
-    
+
 	/**
      *@return return a string with the enemy spaceship picture's path
      */
@@ -82,7 +77,7 @@ public class EnemyShip extends Enemy {
 	public int getNewSize() {
 		return 50;
 	}
-	
+
     /**
      * get the score earned when this enemy was destroyed
      * @return the integer score value by default is 100
@@ -93,7 +88,7 @@ public class EnemyShip extends Enemy {
 	}
 
     /**
-     * Define how the enemy spaceship move 
+     * Define how the enemy spaceship move
      * @return return a MoveStrategy 's object with this data : direction and speed
      */
 	@Override
@@ -104,15 +99,16 @@ public class EnemyShip extends Enemy {
 	}
 
     /**
-     * Call when the spaceship was touched by an other entities ( player or fireball) disable the boolean value 
+     * Call when the spaceship was touched by an other entities ( player or fireball) disable the boolean value
      * of active and remove this (enemy'spaceship will be invisible on the screen), disable the timer task too
      * Add the score earned to the player score and play a destroy song
      */
-	public void hit() {
-		this.stopTask();
-		this.setActive(false);
-		boom.play();
-		data.getScore().setValue(data.getScore().getValue() + this.getScore());
-		data.getUniverse().removeGameEntity(this);
-	}
+		 public void hit() {
+	 		this.stopTask();
+	 		this.setActive(false);
+	 		boom.play();
+	 		data.getLevels().get(0).end();
+	 		data.getScore().setValue(data.getScore().getValue() + this.getScore());
+	 		data.getUniverse().removeGameEntity(this);
+	 	}
 }

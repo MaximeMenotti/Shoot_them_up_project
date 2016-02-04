@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 
 import entities.Entity;
 import entities.Fireball;
+import gameframework.assets.Sound;
 import gameframework.drawing.Drawable;
 import gameframework.drawing.DrawableImage;
 import gameframework.drawing.GameCanvas;
@@ -17,12 +18,13 @@ import gameframework.motion.MoveStrategy;
 import gameframework.motion.overlapping.Overlappable;
 
 public abstract class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable, Entity{
-	
+
 	protected SpriteManagerDefaultImpl sprite;
 	protected int enemySize, score;
 	protected boolean isActive = true;
 	protected GameData data;
-	
+	protected Sound boom;
+
 	/**
      *abstract method for customize the different type of enemy
      */
@@ -30,7 +32,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	protected abstract int getNewSize();
 	protected abstract int getScore();
 	protected abstract MoveStrategy getNewMoveStrategy(GameCanvas canvas);
-	
+
     public Enemy(GameData prmData){
     	this.data = prmData;
     	GameCanvas canvas = prmData.getCanvas();
@@ -39,9 +41,12 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 		this.sprite.reset();
 		this.position = new Point(this.random(canvas.getWidth()-enemySize, 0), -enemySize);
 		this.score = this.getScore();
-		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
+		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));
+		try {
+			boom = new Sound("/sounds/boom.wav");
+		} catch (Exception e) {}
     }
-	
+
     /**
      * generate an random integer
      * @param higher the upper bound
@@ -51,7 +56,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
     public int random(int higher, int lower){
 		return (int)(Math.random() * (higher-lower)) + lower;
 	}
-	
+
     /**
      * get the dimension of the enemy
      * @return a rectangle who defined the object's borders
@@ -59,7 +64,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	public Rectangle getBoundingBox() {
 		return new Rectangle(this.enemySize, this.enemySize);
 	}
-	
+
     /**
      * draw the enemy on the canvas at the defined position
      * @param g
@@ -70,9 +75,9 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		
+
 	}
-    
+
     /**
      * define if the fireball is a movable obect
      *
@@ -81,9 +86,9 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	public boolean isMovable() {
         return true;
     }
-	
+
     /**
-     * with this method, an entity like player or spaceship enemy can shoot fireball 
+     * with this method, an entity like player or spaceship enemy can shoot fireball
      */
 	public void fire(GameData data){
 		data.getUniverse().addGameEntity(new Fireball(data, position, 15, false));
@@ -96,7 +101,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	public boolean isActive() {
 		return isActive;
 	}
-    
+
     /**
      *define with the boolean parameter if the enemy is active
      * @oarameter the value of active
