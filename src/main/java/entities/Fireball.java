@@ -116,4 +116,9 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 		data.getUniverse().removeGameEntity(this);
 		data.getLevels().get(0).end();
 	}
+
+	public static int getBulletSize() {
+		return BULLET_SIZE;
+	}
+
 }

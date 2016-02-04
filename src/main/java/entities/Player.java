@@ -139,5 +139,9 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 	public boolean isActive() {
 		return true;
 	}
+
+	public int getSHIP_SIZE() {
+		return SHIP_SIZE;
+	}
 		
 }
