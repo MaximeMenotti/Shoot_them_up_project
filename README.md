@@ -10,6 +10,7 @@ PEYROUX Florentin
 ## How to run the game with Maven?
 
 ```bash
+$ mvn install
 $ mvn exec:java
 ```
 
