@@ -1,5 +1,6 @@
 package pqtmain;
 
+import entities.Player;
 import game.levels.LevelWithEnemies;
 import game.levels.LevelWithRocks;
 import gameframework.game.*;
@@ -26,6 +27,8 @@ public class Main {
 		//Creation of the game window.
 		GameWindow gameWindow = new GameWindow(WINDOWS_NAME, data.getCanvas(), data);
 
+		Player.getInstance(data);
+		
 		//display the windows
 		gameWindow.createGUI();
 		

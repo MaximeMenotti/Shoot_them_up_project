@@ -3,7 +3,6 @@ package game.levels;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import entities.Player;
 import entities.Wall;
 import game.GameUniverseViewPortSB;
 import game.OverlapRulesEntities;
@@ -42,11 +41,9 @@ public abstract class Level extends GameLevelDefaultImpl{
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
-		Player aPlayer = Player.getInstance(data);
 		createWalls();
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
-		data.getUniverse().addGameEntity(aPlayer);
 	}
 	
 	@Override

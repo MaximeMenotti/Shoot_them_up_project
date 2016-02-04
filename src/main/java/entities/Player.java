@@ -16,7 +16,6 @@ import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
 
 import java.awt.Rectangle;
-
 import game.Shoot;
 import gameframework.motion.blocking.MoveBlocker;
 
@@ -63,6 +62,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         data.getCanvas().addKeyListener(this.shoot);
         this.moveDriver.setStrategy(direction);
         this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
+		prmData.getUniverse().addGameEntity(this);
         try {
 			outch = new Sound("/sounds/outch.wav");
 		} catch (Exception e) {
@@ -124,12 +124,11 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
      * and if there aren't any life, we remove the player on the screen
      */
 	public void hit() {
-		if(data.getLife().getValue() == 0){
+		outch.play();
+		data.decreaseLife(1);		
+		if(data.getLife().getValue() <= 0){
+			data.getEndOfGame().setValue(true);
 			data.getUniverse().removeGameEntity(this);
-		}
-		else {
-			outch.play();
-			data.decreaseLife(1);
 		}
 	}
 

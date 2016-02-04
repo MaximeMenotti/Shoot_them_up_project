@@ -51,7 +51,6 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
 		this.sprite.reset();			
 		this.moveDriver.setStrategy(ms);
 		this.isFriendly = isFriendly;
-		prmData.getUniverse().addGameEntity(this);
 	}
 	
     /**
@@ -114,7 +113,7 @@ public class Fireball extends GameMovable implements Overlappable, GameEntity, D
      */
 	public void hit() {
 		this.setActive(false);
-		data.getLevels().get(0).end();
 		data.getUniverse().removeGameEntity(this);
+		data.getLevels().get(0).end();
 	}
 }
