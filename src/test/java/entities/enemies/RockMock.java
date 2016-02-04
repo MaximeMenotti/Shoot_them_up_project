@@ -10,7 +10,7 @@ import gameframework.motion.MoveStrategyStraightLine;
 public class RockMock extends Enemy{
 
 	public RockMock(GameCanvas canvas, GameData data) {
-		this.init(canvas, data);
+		super(data);
 	}
 
 	@Override

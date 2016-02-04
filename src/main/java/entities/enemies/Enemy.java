@@ -21,26 +21,26 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	protected SpriteManagerDefaultImpl sprite;
 	protected int enemySize, score;
 	protected boolean isActive = true;
+	protected GameData data;
 	
 	/**
-     *initialise the enemy's attribut : size, picture , position , score
-     */
-    public void init(GameCanvas canvas, GameData prmData){
-		this.enemySize = this.getNewSize();
-		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage(this.getStringImagePath(), canvas), this.enemySize, 1);
-		this.sprite.reset();
-		this.position = new Point(this.random(canvas.getWidth()-enemySize, 0), -enemySize);
-		this.score = this.getScore();
-		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
-	}
-	
-    /**
      *abstract method for customize the different type of enemy
      */
 	protected abstract String getStringImagePath();
 	protected abstract int getNewSize();
 	protected abstract int getScore();
 	protected abstract MoveStrategy getNewMoveStrategy(GameCanvas canvas);
+	
+    public Enemy(GameData prmData){
+    	this.data = prmData;
+    	GameCanvas canvas = prmData.getCanvas();
+    	this.enemySize = this.getNewSize();
+		this.sprite = new SpriteManagerDefaultImpl(new DrawableImage(this.getStringImagePath(), canvas), this.enemySize, 1);
+		this.sprite.reset();
+		this.position = new Point(this.random(canvas.getWidth()-enemySize, 0), -enemySize);
+		this.score = this.getScore();
+		this.moveDriver.setStrategy(this.getNewMoveStrategy(canvas));	
+    }
 	
     /**
      * generate an random integer
@@ -86,7 +86,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
      * with this method, an entity like player or spaceship enemy can shoot fireball 
      */
 	public void fire(GameData data){
-		new Fireball(data, position, 15, false);
+		data.getUniverse().addGameEntity(new Fireball(data, position, 15, false));
 	}
 
     /**

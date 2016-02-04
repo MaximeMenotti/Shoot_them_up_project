@@ -27,7 +27,6 @@ public class LevelWithRocks extends Level{
 			@Override
 			public void run() 
 			{
-				count++;
 				data.getUniverse().addGameEntity(new Rock(data));
 			}	
 		};
