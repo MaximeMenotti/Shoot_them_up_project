@@ -9,7 +9,7 @@ import gameframework.gui.*;
 
 
 public class Main {
-
+	protected static int currentLevel = 0;
 	public static void main(String[] args) {
 		//Constant
 		final String WINDOWS_NAME = "SpaceBattle";
@@ -37,11 +37,19 @@ public class Main {
         game.start();
 	}
 
+	public static int getCurrentLevel(){
+		return currentLevel;
+	}
+	
+	public static void incrementCurrentLevel(){
+		currentLevel++;
+	}
+	
 	public static void level1(GameData data){
-		data.addLevel(new LevelWithRocks(data,4));
+		data.addLevel(new LevelWithRocks(data,3));
 	}
 
 	public static void level2(GameData data){
-		data.addLevel(new LevelWithEnemies(data,4));
+		data.addLevel(new LevelWithEnemies(data,3));
 	}
 }

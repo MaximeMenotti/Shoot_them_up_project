@@ -11,10 +11,11 @@ import game.OverlapRulesEntities;
 import gameframework.assets.Sound;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
+import pqtmain.Main;
 
 public abstract class Level extends GameLevelDefaultImpl implements Observer{
 	protected int nbEnemiesToKill;
-	protected int nbEnemiesKilled;
+	protected int nbEnemiesKilled = 0;
 	protected Timer timer = new Timer();
 	protected Sound gameOver;
 	protected Sound win;
@@ -61,8 +62,9 @@ public abstract class Level extends GameLevelDefaultImpl implements Observer{
 	@Override
 	public void end() {
 		incrementNbEnemiesKilled();
+		System.out.println("nbEnemiesKilled :"+ nbEnemiesKilled);
 		if(nbEnemiesToKill <= nbEnemiesKilled){
-			System.out.println("max");
+			Main.incrementCurrentLevel();
 			stopGameLoop = true;
 			this.stopTask();
 		}
