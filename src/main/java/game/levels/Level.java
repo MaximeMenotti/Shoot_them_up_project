@@ -4,15 +4,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import entities.Wall;
-import game.GameUniverseViewPortSB;
+import game.GameUniverseViewPortWithCustomBackground;
 import game.OverlapRulesEntities;
 import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 
 public abstract class Level extends GameLevelDefaultImpl{
-	protected int nbEnemies;
+	protected int nbEnemiesToKill;
 	protected int nbEnemiesKilled;
-	protected int count = 0;
 	protected Timer timer = new Timer();
 	
 	public abstract TimerTask getTimerTask();
@@ -22,9 +21,9 @@ public abstract class Level extends GameLevelDefaultImpl{
      * @param : the game data
      * @param : the enemy 's number we will create
      */
-    public Level(GameData data, int nbEnemiesToAdd) {
+    public Level(GameData data, int nbEnemiesToKill) {
 		super(data);
-		nbEnemies = nbEnemiesToAdd;
+		this.nbEnemiesToKill = nbEnemiesToKill;
 		OverlapRulesEntities rules = new OverlapRulesEntities();
 		rules.setGameData(data);
 		data.getOverlapProcessor().setOverlapRules(rules);
@@ -40,16 +39,19 @@ public abstract class Level extends GameLevelDefaultImpl{
      */
 	@Override
 	protected void init() {
-		this.gameBoard = new GameUniverseViewPortSB(this.data);	
+		this.gameBoard = new GameUniverseViewPortWithCustomBackground(this.data);	
 		createWalls();
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
 	}
 	
+	/**
+	 * end the game if the number of killed enemy is equals or higher to the number of enemies of the level
+	 */
 	@Override
 	public void end() {
 		incrementNbEnemiesKilled();
-		if(nbEnemies <= nbEnemiesKilled){
+		if(nbEnemiesToKill <= nbEnemiesKilled){
 			timer.cancel();
 			timer.purge();
 			this.getTimerTask().cancel();

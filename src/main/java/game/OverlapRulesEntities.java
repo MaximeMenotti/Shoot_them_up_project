@@ -32,7 +32,7 @@ public class OverlapRulesEntities extends OverlapRulesApplierDefaultImpl {
 	
     /**
      * Rules for all enemy's fireballs (shoot)
-     * call at the game's initialisation
+     * call at the game's initialization
      * @param e1 enemy ship who shoot this fireball
      * @param e2 the fireball object
      */
@@ -77,7 +77,7 @@ public class OverlapRulesEntities extends OverlapRulesApplierDefaultImpl {
 	}
 	
     /**
-     * verify if an entity is active. in the true case we call the hit method for the 2 entitys (the hitter and 
+     * verify if an entity is active. in the true case we call the hit method for the 2 entities (the hitter and 
      * the hitting)
      */
 	public void checkActive(Entity anEntity_A, Entity anEntity_B){

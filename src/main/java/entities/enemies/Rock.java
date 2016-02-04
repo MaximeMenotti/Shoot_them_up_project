@@ -9,7 +9,6 @@ import gameframework.motion.MoveStrategyStraightLine;
 
 public class Rock extends Enemy{
 	
-	protected GameData data;
 	protected Sound boom;
 
     /**
@@ -17,8 +16,8 @@ public class Rock extends Enemy{
      * @param prmData
      */
 	public Rock(GameData prmData) {
+		super(prmData);
 		this.data = prmData;
-		this.init(data.getCanvas(), data);
 		try {
 			boom = new Sound("/sounds/boom.wav");
 		} catch (Exception e) {}

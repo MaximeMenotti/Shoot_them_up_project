@@ -15,19 +15,17 @@ public class EnemyShip extends Enemy {
 	
 	protected Task task;
 	protected Timer timer = new Timer();
-	protected GameData data;
 	protected Sound boom;
 	
     /**
      * the constructor of one enemy : this is a spaceship who can shoot to the
      * player direction and hitting him.
-     * define the sound who was played when we distroye this enemy
+     * define the sound who was played when we destroy this enemy
      *
      * @param prmData the game data
      */
     public EnemyShip(GameData prmData) {
-		this.data = prmData;
-		this.init(prmData.getCanvas(), prmData);
+		super(prmData);
 		this.task = new Task(prmData);
 		this.task.run();
 		try {
@@ -87,7 +85,7 @@ public class EnemyShip extends Enemy {
 	
     /**
      * get the score earned when this enemy was destroyed
-     * @return the intger score value by defaul is 100
+     * @return the integer score value by default is 100
      */
 	@Override
 	public int getScore() {
@@ -106,9 +104,9 @@ public class EnemyShip extends Enemy {
 	}
 
     /**
-     * Call when the spaceship was touched by an other entities ( player or fireball) desactive the boolean value 
-     * of active and remove this (enemy'spaceship will be invisible on the screen), desactive the timer task too
-     * Add the score earned to the player score and play a destoying song
+     * Call when the spaceship was touched by an other entities ( player or fireball) disable the boolean value 
+     * of active and remove this (enemy'spaceship will be invisible on the screen), disable the timer task too
+     * Add the score earned to the player score and play a destroy song
      */
 	public void hit() {
 		this.stopTask();

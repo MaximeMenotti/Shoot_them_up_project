@@ -26,14 +26,14 @@ public class Shoot implements KeyListener {
 	}
 
     /**
-     * Event : call when a keyborad key was pressed
+     * Event : call when a keyboard key was pressed
      * @param arg0 the event , with this object we can have the key pressed
      */
 	public void keyPressed(KeyEvent arg0) {
 	}
 
     /**
-     * Event : call when a keyborad key was released : in this method
+     * Event : call when a keyboard key was released : in this method
      * we call the fire method for the player shoot one fireball
      * @param arg0 the event , with this object we can have the key pressed
      */
@@ -47,7 +47,7 @@ public class Shoot implements KeyListener {
 	}
 	
     /**
-     * This methode create a fire ball friendly
+     * This method create a fire ball friendly
      * it was called when player shoot
      * @param from the name of the event
      * @param e the key event

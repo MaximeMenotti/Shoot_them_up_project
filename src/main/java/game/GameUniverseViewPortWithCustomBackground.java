@@ -5,13 +5,13 @@ import java.net.URL;
 import gameframework.drawing.GameUniverseViewPortDefaultImpl;
 import gameframework.game.GameData;
 
-public class GameUniverseViewPortSB extends GameUniverseViewPortDefaultImpl {
+public class GameUniverseViewPortWithCustomBackground extends GameUniverseViewPortDefaultImpl {
 	
     /**
      * constructor
      * @param data the game data
      */
-    public GameUniverseViewPortSB (GameData data) {
+    public GameUniverseViewPortWithCustomBackground (GameData data) {
 		super(data);
 	}
 	

@@ -27,7 +27,6 @@ public class LevelWithEnemies extends Level{
 			@Override
 			public void run() 
 			{
-				count++;
 				data.getUniverse().addGameEntity(new EnemyShip(data));
 			}	
 		};

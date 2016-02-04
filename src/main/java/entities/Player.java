@@ -16,6 +16,7 @@ import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
 
 import java.awt.Rectangle;
+
 import game.Shoot;
 import gameframework.motion.blocking.MoveBlocker;
 
@@ -29,31 +30,14 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
 
     /**
      * Constructor private of Player because of the using of the singleton design pattern
-     * 
      */
-    private Player() {
+    private Player(GameData prmData) {
         super();
-    }
-    
-    private static Player INSTANCE;
-    
-	public static Player getInstance(GameData data){	
-		if(INSTANCE == null){
-			INSTANCE = new Player();
-			INSTANCE.init(data);
-		}
-		return INSTANCE;
-	}
-    
-    public void init(GameData prmData){
-    	this.data = prmData;
+        this.data = prmData;
         
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", data.getCanvas()), SHIP_SIZE, 3);
         this.position = new Point(data.getCanvas().getWidth()/2-SHIP_SIZE, data.getCanvas().getHeight()-SHIP_SIZE);
-        //initialize sprite manager
         this.sprite.reset();
-
-        //for playing with keyboard
         MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
         this.shoot = new Shoot(prmData, this);
@@ -63,18 +47,29 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         this.moveDriver.setStrategy(direction);
         this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
 		prmData.getUniverse().addGameEntity(this);
-        try {
+		try {
 			outch = new Sound("/sounds/outch.wav");
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
     
+    private static Player INSTANCE;
     
+    /**
+     * The method used to get the player instance
+     * @param data the data of the game to initialize the player
+     * @return the instance of the player
+     */
+	public static Player getInstance(GameData data){	
+		if(INSTANCE == null){
+			INSTANCE = new Player(data);
+		}
+		return INSTANCE;
+	}    
 
     /**
      * draw the player spaceship on the canvas at the defined position
-     * sprite the player for see a different view if it go to left or right or
-     * if it static
      * @param g
      */
     public void draw(Graphics g) {
@@ -91,6 +86,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         return true;
     }
 
+    
     @Override
     public void oneStepMoveAddedBehavior() {
         Point directionActual = this.moveDriver.getSpeedVector(this).getDirection();
