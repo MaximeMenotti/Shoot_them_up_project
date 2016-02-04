@@ -5,7 +5,6 @@ import gameframework.drawing.GameCanvas;
 import gameframework.game.GameData;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.MoveStrategyStraightLine;
-import pqtmain.Main;
 
 public class Rock extends Enemy{
 
@@ -57,12 +56,8 @@ public class Rock extends Enemy{
      * Call when the rock was touched by an other entities (player or fireball) desactive the boolean value of
      * active and remove this (rock will be invisible on the screen)
      */
-		 public void hit() {
-	 		this.setActive(false);
-	 		boom.play();
-	 		data.getLevels().get(Main.getCurrentLevel()).end();
-	 		data.getScore().setValue(data.getScore().getValue() + this.getScore());
-	 		data.getUniverse().removeGameEntity(this);
-	 	}
+	 public void hit() {
+ 		this.remove();
+ 	 }
 
 }

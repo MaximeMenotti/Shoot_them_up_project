@@ -16,6 +16,7 @@ import gameframework.game.GameEntity;
 import gameframework.motion.GameMovable;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.overlapping.Overlappable;
+import pqtmain.Main;
 
 public abstract class Enemy extends GameMovable implements Overlappable, GameEntity, Drawable, Entity{
 
@@ -79,8 +80,7 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 	}
 
     /**
-     * define if the fireball is a movable obect
-     *
+     * defines if the fireball is a movable obect
      * @return true because fireball isn't a static object
      */
 	public boolean isMovable() {
@@ -104,9 +104,17 @@ public abstract class Enemy extends GameMovable implements Overlappable, GameEnt
 
     /**
      *define with the boolean parameter if the enemy is active
-     * @oarameter the value of active
+     * @param the value of active
      */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public void remove(){
+		this.setActive(false);
+ 		boom.play();
+ 		data.getLevels().get(Main.getCurrentLevel()).end();
+ 		data.getScore().setValue(data.getScore().getValue() + this.getScore());
+ 		data.getUniverse().removeGameEntity(this);
 	}
 }

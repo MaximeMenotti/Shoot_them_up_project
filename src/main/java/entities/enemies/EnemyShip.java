@@ -9,7 +9,6 @@ import gameframework.drawing.GameCanvas;
 import gameframework.game.GameData;
 import gameframework.motion.MoveStrategy;
 import gameframework.motion.MoveStrategyStraightLine;
-import pqtmain.Main;
 
 public class EnemyShip extends Enemy {
 
@@ -106,10 +105,6 @@ public class EnemyShip extends Enemy {
      */
 		 public void hit() {
 	 		this.stopTask();
-	 		this.setActive(false);
-	 		boom.play();
-	 		data.getLevels().get(Main.getCurrentLevel()).end();
-	 		data.getScore().setValue(data.getScore().getValue() + this.getScore());
-	 		data.getUniverse().removeGameEntity(this);
+	 		this.remove();
 	 	}
 }

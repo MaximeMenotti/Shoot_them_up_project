@@ -46,7 +46,7 @@ public abstract class Level extends GameLevelDefaultImpl implements Observer{
     }
 
     /**
-     * initializes the level with a number of defined enemy
+     * Initializes the level with a number of defined enemy
      */
 	@Override
 	protected void init() {
@@ -57,12 +57,11 @@ public abstract class Level extends GameLevelDefaultImpl implements Observer{
 	}
 
 	/**
-	 * end the game if the number of killed enemy is equals or higher to the number of enemies of the level
+	 * Ends the game if the number of killed enemy is equals or higher to the number of enemies of the level
 	 */
 	@Override
 	public void end() {
 		incrementNbEnemiesKilled();
-		System.out.println("nbEnemiesKilled :"+ nbEnemiesKilled);
 		if(nbEnemiesToKill <= nbEnemiesKilled){
 			Main.incrementCurrentLevel();
 			stopGameLoop = true;
@@ -71,7 +70,7 @@ public abstract class Level extends GameLevelDefaultImpl implements Observer{
 	}
 
     /**
-     * created the wall around the canvas to avoid the player'ship to leave the playing area
+     * Creates the wall around the canvas to avoid the player'ship to leave the playing area
      */
 	public void createWalls(){
 		//North
@@ -87,6 +86,9 @@ public abstract class Level extends GameLevelDefaultImpl implements Observer{
         data.getUniverse().addGameEntity(new Wall(0,0 ,1, data.getCanvas().getHeight() ));
 	}
 
+	/**
+	 * Stops all the running task
+	 */
 	public void stopTask(){
 		this.getTimerTask().cancel();
 		timer.cancel();
