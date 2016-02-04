@@ -16,7 +16,6 @@ import gameframework.motion.SpeedVector;
 import gameframework.motion.overlapping.Overlappable;
 
 import java.awt.Rectangle;
-
 import game.Shoot;
 import gameframework.motion.blocking.MoveBlocker;
 
@@ -25,17 +24,30 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     protected SpriteManagerDefaultImpl sprite;
     protected GameData data;
     protected Sound outch;
-    
+    protected Shoot shoot;
     final protected int SHIP_SIZE = 50;
 
     /**
-     * Constructor of player
-     * @param canvas the gamecanvas for drawing player
-     * @param prmData the game data
+     * Constructor private of Player because of the using of the singleton design pattern
+     * 
      */
-    public Player(GameData prmData) {
+    private Player() {
         super();
-        this.data = prmData;
+    }
+    
+    private static Player INSTANCE;
+    
+	public static Player getInstance(GameData data){	
+		if(INSTANCE == null){
+			INSTANCE = new Player();
+			INSTANCE.init(data);
+		}
+		return INSTANCE;
+	}
+    
+    public void init(GameData prmData){
+    	this.data = prmData;
+        
         this.sprite = new SpriteManagerDefaultImpl(new DrawableImage("/images/playersprite.png", data.getCanvas()), SHIP_SIZE, 3);
         this.position = new Point(data.getCanvas().getWidth()/2-SHIP_SIZE, data.getCanvas().getHeight()-SHIP_SIZE);
         //initialize sprite manager
@@ -44,18 +56,20 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
         //for playing with keyboard
         MoveStrategyKeyboard direction = new MoveStrategyKeyboard8Dir(false, new SpeedVector(new Point(0,0), 20));
         
-        Shoot guns = new Shoot(prmData, this);
+        this.shoot = new Shoot(prmData, this);
         
         data.getCanvas().addKeyListener(direction);
-        data.getCanvas().addKeyListener(guns);
+        data.getCanvas().addKeyListener(this.shoot);
         this.moveDriver.setStrategy(direction);
         this.moveDriver.setmoveBlockerChecker(prmData.getMoveBlockerChecker());
-        
+		prmData.getUniverse().addGameEntity(this);
         try {
 			outch = new Sound("/sounds/outch.wav");
 		} catch (Exception e) {
 		}
     }
+    
+    
 
     /**
      * draw the player spaceship on the canvas at the defined position
@@ -68,7 +82,7 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
     }
 
     /**
-     * define if the player is a movable obect
+     * define if the player is a movable object
      *
      * @return true because the player space ship move at left to right
      * or right to left
@@ -110,17 +124,16 @@ public class Player extends GameMovable implements Overlappable, GameEntity, Dra
      * and if there aren't any life, we remove the player on the screen
      */
 	public void hit() {
-		if(data.getLife().getValue() == 0){
+		outch.play();
+		data.decreaseLife(1);		
+		if(data.getLife().getValue() <= 0){
+			data.getEndOfGame().setValue(true);
 			data.getUniverse().removeGameEntity(this);
-		}
-		else {
-			outch.play();
-			data.decreaseLife(1);
 		}
 	}
 
     /**
-     * Return the boolean value true beacause the player is always an active entity
+     * Return the boolean value true because the player is always an active entity
      * @return the active value
      */
 	public boolean isActive() {

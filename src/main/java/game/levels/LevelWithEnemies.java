@@ -28,11 +28,6 @@ public class LevelWithEnemies extends Level{
 			public void run() 
 			{
 				count++;
-			     if (count >= nbEnemies) {
-			         timer.cancel();
-			         timer.purge();
-			         return;
-			     }
 				data.getUniverse().addGameEntity(new EnemyShip(data));
 			}	
 		};

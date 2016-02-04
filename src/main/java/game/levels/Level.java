@@ -3,7 +3,6 @@ package game.levels;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import entities.Player;
 import entities.Wall;
 import game.GameUniverseViewPortSB;
 import game.OverlapRulesEntities;
@@ -11,10 +10,11 @@ import gameframework.game.GameData;
 import gameframework.game.GameLevelDefaultImpl;
 
 public abstract class Level extends GameLevelDefaultImpl{
-	protected static int nbEnemies;
-	public static int count = 0;
-	public static Timer timer = new Timer();
-
+	protected int nbEnemies;
+	protected int nbEnemiesKilled;
+	protected int count = 0;
+	protected Timer timer = new Timer();
+	
 	public abstract TimerTask getTimerTask();
 	
 	/**
@@ -31,18 +31,31 @@ public abstract class Level extends GameLevelDefaultImpl{
 		data.getOverlapProcessor().processOverlapsAll();
 	}
 	
+    public void incrementNbEnemiesKilled(){
+    	this.nbEnemiesKilled++;
+    }
+    
     /**
      * initializes the level with a number of defined enemy
      */
 	@Override
 	protected void init() {
 		this.gameBoard = new GameUniverseViewPortSB(this.data);	
-		Player aPlayer = new Player(data);
 		createWalls();
 		TimerTask task = this.getTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 2000);
-		data.getUniverse().addGameEntity(aPlayer);
-                
+	}
+	
+	@Override
+	public void end() {
+		incrementNbEnemiesKilled();
+		if(nbEnemies <= nbEnemiesKilled){
+			timer.cancel();
+			timer.purge();
+			this.getTimerTask().cancel();
+			stopGameLoop = true;
+			data.getEndOfGame().setValue(true);
+		}
 	}
 	
     /**
